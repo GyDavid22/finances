@@ -3,3 +3,16 @@
     width: 8rem;
     height: 8rem;
 }
+
+app-root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+app-login-screen, app-registration-screen, app-user-overview-screen, .fill-parent-height {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
