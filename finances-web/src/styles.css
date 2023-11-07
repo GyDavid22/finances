@@ -1,11 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --navbar-padding: 3.75rem;
+}
+
 .person-big {
     width: 8rem;
     height: 8rem;
 }
 
 app-root {
-    min-height: calc(100vh - 3.75rem);
+    min-height: calc(100vh - var(--navbar-padding));
     display: flex;
     flex-direction: column;
 }
@@ -18,5 +22,5 @@ app-login-screen, app-registration-screen, app-user-overview-screen, .fill-paren
 }
 
 body {
-    margin-top: 3.75rem !important;
+    margin-top: var(--navbar-padding) !important;
 }
