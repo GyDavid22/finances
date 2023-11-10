@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./user-overview-screen.component.css']
 })
 export class UserOverviewScreenComponent {
+  public oldPassword: String = "";
+  public newPassword: String = "";
+  public reNewPassword: String = "";
+
   public deleteButton(e: Event) {
     e.preventDefault();
   }

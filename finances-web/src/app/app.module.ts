@@ -7,6 +7,7 @@ import { CommonNavbarComponent } from './common-navbar/common-navbar.component';
 import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
 import { RegistrationScreenComponent } from './screens/registration-screen/registration-screen.component';
 import { UserOverviewScreenComponent } from './screens/user-overview-screen/user-overview-screen.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { UserOverviewScreenComponent } from './screens/user-overview-screen/user
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

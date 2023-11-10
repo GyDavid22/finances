@@ -7,8 +7,8 @@
                     <h1>Login</h1>
                 </div>
                 <form method="post">
-                    <input class="form-control my-1" id="username" type="text" placeholder="Username">
-                    <input class="form-control my-1" id="password" type="password" placeholder="Password">
+                    <input class="form-control my-1" id="username" name="username" type="text" placeholder="Username" [(ngModel)]="username">
+                    <input class="form-control my-1" id="password" name="password" type="password" placeholder="Password" [(ngModel)]="password">
                     <div class="d-flex align-items-center justify-content-center w-100">
                         <button class="btn btn-primary my-1" id="submit-button" type="submit"
                             (click)="loginButton($event)">Login</button>

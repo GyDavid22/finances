@@ -6,6 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./registration-screen.component.css']
 })
 export class RegistrationScreenComponent {
+  public username: String = "";
+  public password: String = "";
+  public repassword: String = "";
+
   public registrationButton(e: Event) {
     e.preventDefault();
   }
