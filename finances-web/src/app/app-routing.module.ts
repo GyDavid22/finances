@@ -1,15 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginScreenComponent } from './login-screen/login-screen.component';
-import { RegistrationScreenComponent } from './registration-screen/registration-screen.component';
-import { UserOverviewScreenComponent } from './user-overview-screen/user-overview-screen.component';
+import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
+import { RegistrationScreenComponent } from './screens/registration-screen/registration-screen.component';
+import { UserOverviewScreenComponent } from './screens/user-overview-screen/user-overview-screen.component';
 
 const routes: Routes = [
-  {
-    path: "",
-    pathMatch: "full",
-    redirectTo: "/login"
-  },
   {
   path: "login",
   component: LoginScreenComponent
@@ -21,6 +16,11 @@ const routes: Routes = [
   {
     path: "overview",
     component: UserOverviewScreenComponent
+  },
+  {
+    path: "**",
+    pathMatch: "full",
+    redirectTo: "login"
   }
 ];
 
