@@ -8,6 +8,7 @@ import { LoginScreenComponent } from './screens/login-screen/login-screen.compon
 import { RegistrationScreenComponent } from './screens/registration-screen/registration-screen.component';
 import { UserOverviewScreenComponent } from './screens/user-overview-screen/user-overview-screen.component';
 import { FormsModule } from '@angular/forms';
+import { DismissableErrorMessageComponent } from './dismissable-error-message/dismissable-error-message.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FormsModule } from '@angular/forms';
     LoginScreenComponent,
     RegistrationScreenComponent,
     UserOverviewScreenComponent,
-    CommonNavbarComponent
+    CommonNavbarComponent,
+    DismissableErrorMessageComponent
   ],
   imports: [
     BrowserModule,

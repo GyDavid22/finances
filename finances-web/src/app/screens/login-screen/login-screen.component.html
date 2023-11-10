@@ -6,9 +6,13 @@
                     <img src="/assets/img/person-circle.svg" class="person-big" alt="Person logo">
                     <h1>Login</h1>
                 </div>
+                <app-dismissable-error-message
+                    [message]="'Username or password incorrect'"></app-dismissable-error-message>
                 <form method="post">
-                    <input class="form-control my-1" id="username" name="username" type="text" placeholder="Username" [(ngModel)]="username">
-                    <input class="form-control my-1" id="password" name="password" type="password" placeholder="Password" [(ngModel)]="password">
+                    <input class="form-control my-1" id="username" name="username" type="text" placeholder="Username"
+                        [(ngModel)]="username">
+                    <input class="form-control my-1" id="password" name="password" type="password"
+                        placeholder="Password" [(ngModel)]="password">
                     <div class="d-flex align-items-center justify-content-center w-100">
                         <button class="btn btn-primary my-1" id="submit-button" type="submit"
                             (click)="loginButton($event)">Login</button>
