@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-login-screen',
@@ -6,10 +6,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./login-screen.component.css']
 })
 export class LoginScreenComponent {
-  public username: String = "";
-  public password: String = "";
+  username: String = "";
+  password: String = "";
 
-  public loginButton(e: Event) {
+  loginButton(e: Event) {
     e.preventDefault();
   }
 }
