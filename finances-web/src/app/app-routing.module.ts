@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginScreenComponent } from './screens/login-screen/login-screen.component';
 import { RegistrationScreenComponent } from './screens/registration-screen/registration-screen.component';
 import { UserOverviewScreenComponent } from './screens/user-overview-screen/user-overview-screen.component';
+import { FinancesOverviewScreenComponent } from './screens/finances-overview/finances-overview-screen/finances-overview-screen.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,10 @@ const routes: Routes = [
   },
   {
     path: "overview",
+    component: FinancesOverviewScreenComponent
+  },
+  {
+    path: "user",
     component: UserOverviewScreenComponent
   },
   {

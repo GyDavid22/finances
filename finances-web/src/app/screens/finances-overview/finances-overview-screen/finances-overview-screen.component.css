@@ -1,0 +1,4 @@
+.finance-items-container {
+    max-height: calc(0.75 * 100vh);
+    overflow-y: auto;
+}

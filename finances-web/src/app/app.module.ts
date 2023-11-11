@@ -9,6 +9,11 @@ import { RegistrationScreenComponent } from './screens/registration-screen/regis
 import { UserOverviewScreenComponent } from './screens/user-overview-screen/user-overview-screen.component';
 import { FormsModule } from '@angular/forms';
 import { DismissableErrorMessageComponent } from './dismissable-error-message/dismissable-error-message.component';
+import { CardItemComponent } from './screens/finances-overview/card-item/card-item.component';
+import { FinancesOverviewScreenComponent } from './screens/finances-overview/finances-overview-screen/finances-overview-screen.component';
+import { PersonIconSvgComponent } from './person-icon-svg/person-icon-svg.component';
+import { PencilIconSvgComponent } from './screens/finances-overview/card-item/pencil-icon-svg/pencil-icon-svg.component';
+import { TrashIconSvgComponent } from './screens/finances-overview/card-item/trash-icon-svg/trash-icon-svg.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +22,12 @@ import { DismissableErrorMessageComponent } from './dismissable-error-message/di
     RegistrationScreenComponent,
     UserOverviewScreenComponent,
     CommonNavbarComponent,
-    DismissableErrorMessageComponent
+    DismissableErrorMessageComponent,
+    CardItemComponent,
+    FinancesOverviewScreenComponent,
+    PersonIconSvgComponent,
+    PencilIconSvgComponent,
+    TrashIconSvgComponent
   ],
   imports: [
     BrowserModule,
