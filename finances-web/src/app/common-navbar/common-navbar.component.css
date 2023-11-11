@@ -3,3 +3,18 @@
     height: 1.25rem;
     margin-right: 0.5rem;
 }
+
+.navbar-brand {
+    font-family: "Julius Sans One";
+}
+
+.name-border {
+    border-color: black;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 0.375rem;
+    padding-left: 0.35rem;
+    padding-right: 0.35rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.1rem;
+}

@@ -14,6 +14,7 @@ import { FinancesOverviewScreenComponent } from './screens/finances-overview/fin
 import { PersonIconSvgComponent } from './person-icon-svg/person-icon-svg.component';
 import { PencilIconSvgComponent } from './screens/finances-overview/card-item/pencil-icon-svg/pencil-icon-svg.component';
 import { TrashIconSvgComponent } from './screens/finances-overview/card-item/trash-icon-svg/trash-icon-svg.component';
+import { CheckIconSvgComponent } from './screens/finances-overview/card-item/check-icon-svg/check-icon-svg.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TrashIconSvgComponent } from './screens/finances-overview/card-item/tra
     FinancesOverviewScreenComponent,
     PersonIconSvgComponent,
     PencilIconSvgComponent,
-    TrashIconSvgComponent
+    TrashIconSvgComponent,
+    CheckIconSvgComponent
   ],
   imports: [
     BrowserModule,

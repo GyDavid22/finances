@@ -8,4 +8,12 @@ import { FinanceItem } from 'src/app/Entities';
 })
 export class CardItemComponent {
   @Input() item: FinanceItem | undefined;
+
+  isInEditMode: Boolean = false;
+
+  editModeButton(e: Event) {
+    e.preventDefault();
+    this.isInEditMode = true;
+    console.log(this.isInEditMode);
+  }
 }

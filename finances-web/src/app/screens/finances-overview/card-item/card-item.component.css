@@ -13,19 +13,23 @@
     padding-right: 0.5rem;
 }
 
-.pencil-icon, .trash-icon {
+.pencil-icon, .trash-icon, .check-icon {
     width: 1.3rem;
     height: 1.3rem;
 }
 
-.pencil-icon-button {
+.trash-icon-button, .pencil-icon-button {
     padding: 0.5rem;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
 }
 
-.trash-icon-button {
+.check-icon-button {
     padding: 0.5rem;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+}
+
+.date-text {
+    font-size: 0.85rem;
+}
+
+.btn-group > .btn {
+    flex: 0;
 }
