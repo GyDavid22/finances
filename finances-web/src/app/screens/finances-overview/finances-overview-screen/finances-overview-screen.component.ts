@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FinanceItem } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
 
 @Component({
@@ -8,4 +9,10 @@ import { DataService } from 'src/app/data-service.service';
 })
 export class FinancesOverviewScreenComponent {
   dataService: DataService = DataService.getInstance();
+
+  itemToEdit: FinanceItem | undefined;
+
+  prepareItemToEdit(f: FinanceItem) {
+    this.itemToEdit = f;
+  }
 }

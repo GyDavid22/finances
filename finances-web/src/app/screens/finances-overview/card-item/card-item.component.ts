@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FinanceItem } from 'src/app/Entities';
 
 @Component({
@@ -8,12 +8,10 @@ import { FinanceItem } from 'src/app/Entities';
 })
 export class CardItemComponent {
   @Input() item: FinanceItem | undefined;
+  @Output() itemOutput: EventEmitter<FinanceItem> = new EventEmitter<FinanceItem>();
 
-  isInEditMode: Boolean = false;
-
-  editModeButton(e: Event) {
+  editButtonHandler(e: Event) {
     e.preventDefault();
-    this.isInEditMode = true;
-    console.log(this.isInEditMode);
+    this.itemOutput.emit(this.item);
   }
 }

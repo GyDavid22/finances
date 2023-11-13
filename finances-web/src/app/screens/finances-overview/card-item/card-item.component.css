@@ -18,11 +18,7 @@
     height: 1.3rem;
 }
 
-.trash-icon-button, .pencil-icon-button {
-    padding: 0.5rem;
-}
-
-.check-icon-button {
+.trash-icon-button, .pencil-icon-button, .check-icon-button {
     padding: 0.5rem;
 }
 
