@@ -1,35 +1,44 @@
 package com.gydavid22.finances.entities;
 
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.sql.Date;
+import java.util.Collection;
 
 @Entity
+@Table(name = "users_table")
 public class User {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private String userName; // Index
-    private String salt;
-    private String hashedPassword;
+    private char[] salt;
+    private char[] hashedPassword;
+    private Date registrationDate;
 
     @OneToMany
-    private Set<FinanceItem> financeItems;
+    private Collection<FinanceItem> financeItems;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(int id, String userName, String salt, String hashedPassword) {
+    public User(Long id, String userName, char[] salt, char[] hashedPassword) {
         this.id = id;
         this.userName = userName;
         this.salt = salt;
         this.hashedPassword = hashedPassword;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -40,23 +49,35 @@ public class User {
         this.userName = userName;
     }
 
-    public String getSalt() {
+    public char[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(char[] salt) {
         this.salt = salt;
     }
 
-    public String getHashedPassword() {
+    public char[] getHashedPassword() {
         return hashedPassword;
     }
 
-    public void setHashedPassword(String hashedPassword) {
+    public void setHashedPassword(char[] hashedPassword) {
         this.hashedPassword = hashedPassword;
     }
 
-    public Set<FinanceItem> getFinanceItems() {
-        return this.financeItems;
+    public Date getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Date registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Collection<FinanceItem> getFinanceItems() {
+        return financeItems;
+    }
+
+    public void setFinanceItems(Collection<FinanceItem> financeItems) {
+        this.financeItems = financeItems;
     }
 }

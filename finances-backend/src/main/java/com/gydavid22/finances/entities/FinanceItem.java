@@ -1,18 +1,20 @@
 package com.gydavid22.finances.entities;
 
-import java.time.LocalDate;
-
 import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+import java.time.LocalDate;
 
 @Entity
+@Table(name = "finance_items_table")
 public class FinanceItem {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     private double amount;
     private String name;
     private LocalDate date;
@@ -25,7 +27,7 @@ public class FinanceItem {
     public FinanceItem() {
     }
 
-    public FinanceItem(int id, double amount, String name, LocalDate date, String description, User user) {
+    public FinanceItem(Long id, double amount, String name, LocalDate date, String description, User user) {
         this.id = id;
         this.amount = amount;
         this.name = name;
@@ -34,8 +36,12 @@ public class FinanceItem {
         this.user = user;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public double getAmount() {
