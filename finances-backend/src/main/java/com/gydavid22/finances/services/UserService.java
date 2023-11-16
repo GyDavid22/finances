@@ -41,17 +41,18 @@ public class UserService {
     }
 
     public boolean authenticate(UserLoginRegistrationDTO toAuth) {
-        if (this.repo.findByUserName(toAuth.getUserName()).isEmpty()) {
+        List<User> result = this.repo.findByUserName(toAuth.getUserName());
+        if (result.isEmpty()) {
             return false;
         }
-        User u = this.repo.findByUserName(toAuth.getUserName()).get(0);
-        char[] hash = hashPassword(toAuth.getPassword(), u.getSalt());
-        if (u.getHashedPassword().length != hash.length) {
+        User user = result.get(0);
+        char[] hash = hashPassword(toAuth.getPassword(), user.getSalt());
+        if (user.getHashedPassword().length != hash.length) {
             return false;
         }
         int i = 0, j = 0;
-        while (i < u.getHashedPassword().length && j < hash.length) {
-            if (u.getHashedPassword()[i++] != hash[j++]) {
+        while (i < user.getHashedPassword().length && j < hash.length) {
+            if (user.getHashedPassword()[i++] != hash[j++]) {
                 return false;
             }
         }

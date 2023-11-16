@@ -49,7 +49,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken");
     }
 
-    @GetMapping("/user/auth")
+    @PostMapping("/user/auth")
     public ResponseEntity<?> authenticate(@RequestBody UserLoginRegistrationDTO toAuth) {
         if (this.service.authenticate(toAuth)) {
             return ResponseEntity.status(HttpStatus.OK).build();
