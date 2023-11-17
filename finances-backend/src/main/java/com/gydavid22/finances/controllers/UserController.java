@@ -1,17 +1,15 @@
 package com.gydavid22.finances.controllers;
 
-import com.gydavid22.finances.dtos.UserDTO;
 import com.gydavid22.finances.dtos.UserLoginRegistrationDTO;
 import com.gydavid22.finances.entities.User;
+import com.gydavid22.finances.services.SessionService;
 import com.gydavid22.finances.services.UserService;
-
-import java.util.List;
-
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,30 +17,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    private final UserService service;
+    private final UserService userService;
 
-    public UserController(UserService service) {
-        this.service = service;
-    }
+    @Autowired
+    private final SessionService sessionService;
 
-    @GetMapping("/user")
-    public UserDTO[] getAllUser() {
-        List<User> results = this.service.getAll();
-        UserDTO[] returnValues = new UserDTO[results.size()];
-        for (int i = 0; i < results.size(); i++) {
-            returnValues[i] = UserDTO.convertToDto(results.get(i));
-        }
-        return returnValues;
-    }
-
-    @GetMapping("/user/{id}")
-    public UserDTO getById(@PathVariable Long id) {
-        return UserDTO.convertToDto(this.service.getById(id));
+    public UserController(UserService userService, SessionService sessionService) {
+        this.userService = userService;
+        this.sessionService = sessionService;
     }
 
     @PostMapping("/user/create")
-    public ResponseEntity<String> createUser(@RequestBody UserLoginRegistrationDTO toCreate) {
-        boolean didSucceed = this.service.createUser(toCreate);
+    public ResponseEntity<String> createUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toCreate) {
+        if (checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Log out first");
+        }
+        boolean didSucceed = this.userService.createUser(toCreate);
         if (didSucceed) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
@@ -50,10 +40,42 @@ public class UserController {
     }
 
     @PostMapping("/user/auth")
-    public ResponseEntity<?> authenticate(@RequestBody UserLoginRegistrationDTO toAuth) {
-        if (this.service.authenticate(toAuth)) {
+    public ResponseEntity<?> authenticate(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toAuth) {
+        if (checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        User result = this.userService.authenticate(toAuth);
+        if (result != null) {
+            Cookie session = sessionService.generateSessionCookie(result);
+            response.addCookie(session);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @PostMapping("/user/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        if (!checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        sessionService.invalidateSession(request, response);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    private boolean checkCookieValidity(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getCookies() == null) {
+            return false;
+        }
+        for (Cookie i : request.getCookies()) {
+            if (i.getName().equals(SessionService.SESSION_COOKIE_NAME)) {
+                if (sessionService.getUserForSession(i) != null) {
+                    return true;
+                }
+                sessionService.invalidateCookie(i);
+                response.addCookie(i);
+                return false;
+            }
+        }
+        return false;
     }
 }

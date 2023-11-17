@@ -1,11 +1,10 @@
 package com.gydavid22.finances.repositories;
 
 import com.gydavid22.finances.entities.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 public interface UserRepository extends JpaRepository<User, Long> {
-    public List<User> findByUserName(String userName);
+    List<User> findByUserName(String userName);
 }

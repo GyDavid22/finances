@@ -1,16 +1,12 @@
 package com.gydavid22.finances.entities;
 
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "finance_items_table")
+@Table(name = "finance_items_table", indexes = {@Index(columnList = "id"), @Index(columnList = "date")})
 public class FinanceItem {
     @Id
     @GeneratedValue
