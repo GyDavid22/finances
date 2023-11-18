@@ -98,6 +98,11 @@ public class SessionService {
         return result.get(0).getUser();
     }
 
+    public void deleteAllFromUser(User user) {
+        this.repo.deleteAll(user.getSessions());
+        this.repo.flush();
+    }
+
     /**
      * Generates a 64 byte long character sequence using SecureRandom to be used as session ID
      *

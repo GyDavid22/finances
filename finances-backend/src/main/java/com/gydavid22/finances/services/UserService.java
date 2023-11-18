@@ -11,7 +11,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -21,8 +20,12 @@ public class UserService {
     @Autowired
     private final UserRepository repo;
 
-    public UserService(UserRepository repo) {
+    @Autowired
+    private final SessionService sessionService;
+
+    public UserService(UserRepository repo, SessionService sessionService) {
         this.repo = repo;
+        this.sessionService = sessionService;
     }
 
     /**
@@ -32,13 +35,13 @@ public class UserService {
      * @return True, if the creation was successful, false if not (username taken)
      */
     public boolean createUser(UserLoginRegistrationDTO toCreate) {
-        if (!this.repo.findByUserName(toCreate.getUserName()).isEmpty()) {
+        if (checkUsernamePasswordConstraints(toCreate.getUsername(), toCreate.getPassword()) && !this.repo.findByUserName(toCreate.getUsername()).isEmpty()) {
             return false;
         }
         char[] salt = generateSalt();
         this.repo
-                .saveAndFlush(new User(null, toCreate.getUserName(), salt, hashPassword(toCreate.getPassword(), salt),
-                        Date.valueOf(LocalDate.now()), new ArrayList<>(), new ArrayList<>()));
+                .saveAndFlush(new User(null, toCreate.getUsername(), salt, hashPassword(toCreate.getPassword(), salt),
+                        Date.valueOf(LocalDate.now()), null, null));
         return true;
     }
 
@@ -49,16 +52,23 @@ public class UserService {
      * @return The authenticated User object if there is a match, null otherwise
      */
     public User authenticate(UserLoginRegistrationDTO toAuth) {
-        List<User> result = this.repo.findByUserName(toAuth.getUserName());
+        List<User> result = this.repo.findByUserName(toAuth.getUsername());
         if (result.isEmpty()) {
             return null;
         }
         User user = result.get(0);
-        char[] hash = hashPassword(toAuth.getPassword(), user.getSalt());
-        if (Arrays.equals(user.getHashedPassword(), hash)) {
-            return user;
-        }
-        return null;
+        return checkPassword(user, toAuth.getPassword()) ? user : null;
+    }
+
+    private boolean checkPassword(User user, char[] password) {
+        char[] hash = hashPassword(password, user.getSalt());
+        return Arrays.equals(user.getHashedPassword(), hash);
+    }
+
+    public void deleteUser(User user) {
+        this.sessionService.deleteAllFromUser(user);
+        this.repo.delete(user);
+        this.repo.flush();
     }
 
     /**
@@ -95,5 +105,17 @@ public class UserService {
             e.printStackTrace();
         }
         return result;
+    }
+
+    private boolean checkUsernamePasswordConstraints(String username, char[] password) {
+        return checkUsernameConstraints(username) && checkPasswordConstraints(password);
+    }
+
+    private boolean checkUsernameConstraints(String username) {
+        return username != null && username.length() >= 3;
+    }
+
+    private boolean checkPasswordConstraints(char[] password) {
+        return password != null && password.length >= 6;
     }
 }

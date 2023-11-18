@@ -17,10 +17,10 @@ public class User {
     private char[] hashedPassword;
     private Date registrationDate;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private Collection<FinanceItem> financeItems;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private Collection<Session> sessions;
 
     public User() {

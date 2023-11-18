@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class UserController {
         this.sessionService = sessionService;
     }
 
-    @PostMapping("/user/create")
+    @PostMapping("/user")
     public ResponseEntity<String> createUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toCreate) {
         if (checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Log out first");
@@ -36,7 +37,7 @@ public class UserController {
         if (didSucceed) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping("/user/auth")
@@ -56,10 +57,26 @@ public class UserController {
     @PostMapping("/user/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         sessionService.invalidateSession(request, response);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @DeleteMapping("/user")
+    public ResponseEntity<?> delete(HttpServletRequest request, HttpServletResponse response) {
+        if (!checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        User user = null;
+        for (Cookie i : request.getCookies()) {
+            if (i.getName().equals(SessionService.SESSION_COOKIE_NAME)) {
+                user = sessionService.getUserForSession(i);
+            }
+        }
+        sessionService.invalidateSession(request, response);
+        userService.deleteUser(user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     private boolean checkCookieValidity(HttpServletRequest request, HttpServletResponse response) {
