@@ -23,10 +23,13 @@ public class UserService {
 
     @Autowired
     private final SessionService sessionService;
+    @Autowired
+    private final FinanceItemService financeItemService;
 
-    public UserService(UserRepository repo, SessionService sessionService) {
+    public UserService(UserRepository repo, SessionService sessionService, FinanceItemService financeItemService) {
         this.repo = repo;
         this.sessionService = sessionService;
+        this.financeItemService = financeItemService;
     }
 
     /**
@@ -101,7 +104,8 @@ public class UserService {
      * @param user
      */
     public void deleteUser(User user) {
-        this.sessionService.deleteAllFromUser(user);
+        this.sessionService.deleteAllForUser(user);
+        this.financeItemService.deleteAllForUser(user);
         this.repo.delete(user);
         this.repo.flush();
     }

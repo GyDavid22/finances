@@ -1,5 +1,8 @@
 package com.gydavid22.finances.dtos;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
 public class UserChangePasswordDTO {
     private char[] oldpassword;
     private char[] newpassword;

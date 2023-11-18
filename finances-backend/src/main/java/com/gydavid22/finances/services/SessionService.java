@@ -109,7 +109,7 @@ public class SessionService {
      *
      * @param user
      */
-    public void deleteAllFromUser(User user) {
+    public void deleteAllForUser(User user) {
         this.repo.deleteAll(user.getSessions());
         this.repo.flush();
     }
