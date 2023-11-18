@@ -100,8 +100,10 @@ public class SessionService {
         if (result.isEmpty()) {
             return null;
         }
-        result.get(0).setLastInteraction(Date.valueOf(LocalDate.now()));
-        return result.get(0).getUser();
+        Session resultSession = result.get(0);
+        resultSession.setLastInteraction(Date.valueOf(LocalDate.now()));
+        repo.saveAndFlush(resultSession);
+        return resultSession.getUser();
     }
 
     /**
