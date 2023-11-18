@@ -1,6 +1,7 @@
 package com.gydavid22.finances.controllers;
 
 import com.gydavid22.finances.dtos.UserChangePasswordDTO;
+import com.gydavid22.finances.dtos.UserDTO;
 import com.gydavid22.finances.dtos.UserLoginRegistrationDTO;
 import com.gydavid22.finances.entities.User;
 import com.gydavid22.finances.services.SessionService;
@@ -90,6 +91,20 @@ public class UserController {
         }
         boolean result = userService.changePassword(newPass, user);
         return result ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
+        if (!checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        User user = null;
+        for (Cookie i : request.getCookies()) {
+            if (i.getName().equals(SessionService.SESSION_COOKIE_NAME)) {
+                user = sessionService.getUserForSession(i);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(UserDTO.convertToDto(user));
     }
 
     private boolean checkCookieValidity(HttpServletRequest request, HttpServletResponse response) {
