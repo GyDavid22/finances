@@ -1,13 +1,14 @@
 package com.gydavid22.finances.dtos;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.gydavid22.finances.entities.FinanceItem;
 
 import java.time.LocalDate;
 
 @JsonSerialize
 public class FinanceItemDTO {
     private Long id;
-    private double amount;
+    private Double amount;
     private String name;
     private LocalDate date;
     private String description;
@@ -15,12 +16,16 @@ public class FinanceItemDTO {
     public FinanceItemDTO() {
     }
 
-    public FinanceItemDTO(Long id, double amount, String name, LocalDate date, String description) {
+    public FinanceItemDTO(Long id, Double amount, String name, LocalDate date, String description) {
         this.id = id;
         this.amount = amount;
         this.name = name;
         this.date = date;
         this.description = description;
+    }
+
+    public static FinanceItemDTO convertToDto(FinanceItem financeItem) {
+        return new FinanceItemDTO(financeItem.getId(), financeItem.getAmount(), financeItem.getName(), financeItem.getDate(), financeItem.getDescription());
     }
 
     public Long getId() {
@@ -31,11 +36,11 @@ public class FinanceItemDTO {
         this.id = id;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

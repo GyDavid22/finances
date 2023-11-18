@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface FinanceItemRepository extends JpaRepository<FinanceItem, Long> {
-    public List<FinanceItem> findByUser(User user);
+    public List<FinanceItem> findByUserOrderByDateAsc(User user);
 }

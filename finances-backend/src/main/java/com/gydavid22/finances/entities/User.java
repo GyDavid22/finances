@@ -3,7 +3,7 @@ package com.gydavid22.finances.entities;
 import jakarta.persistence.*;
 
 import java.sql.Date;
-import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users_table", indexes = {@Index(columnList = "id,user_name")})
@@ -18,15 +18,15 @@ public class User {
     private Date registrationDate;
 
     @OneToMany(mappedBy = "user")
-    private Collection<FinanceItem> financeItems;
+    private Set<FinanceItem> financeItems;
 
     @OneToMany(mappedBy = "user")
-    private Collection<Session> sessions;
+    private Set<Session> sessions;
 
     public User() {
     }
 
-    public User(Long id, String userName, char[] salt, char[] hashedPassword, Date registrationDate, Collection<FinanceItem> financeItems, Collection<Session> sessions) {
+    public User(Long id, String userName, char[] salt, char[] hashedPassword, Date registrationDate, Set<FinanceItem> financeItems, Set<Session> sessions) {
         this.id = id;
         this.userName = userName;
         this.salt = salt;
@@ -76,19 +76,19 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public Collection<FinanceItem> getFinanceItems() {
+    public Set<FinanceItem> getFinanceItems() {
         return financeItems;
     }
 
-    public void setFinanceItems(Collection<FinanceItem> financeItems) {
+    public void setFinanceItems(Set<FinanceItem> financeItems) {
         this.financeItems = financeItems;
     }
 
-    public Collection<Session> getSessions() {
+    public Set<Session> getSessions() {
         return sessions;
     }
 
-    public void setSessions(Collection<Session> sessions) {
+    public void setSessions(Set<Session> sessions) {
         this.sessions = sessions;
     }
 }
