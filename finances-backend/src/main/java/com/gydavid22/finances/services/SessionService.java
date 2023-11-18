@@ -64,6 +64,12 @@ public class SessionService {
         cookie.setValue("");
     }
 
+    /**
+     * Invalidates current session and sends an empty cookie back
+     *
+     * @param request
+     * @param response
+     */
     public void invalidateSession(HttpServletRequest request, HttpServletResponse response) {
         if (request.getCookies() == null) {
             return;
@@ -98,6 +104,11 @@ public class SessionService {
         return result.get(0).getUser();
     }
 
+    /**
+     * Deletes all open sessions related to a user
+     *
+     * @param user
+     */
     public void deleteAllFromUser(User user) {
         this.repo.deleteAll(user.getSessions());
         this.repo.flush();

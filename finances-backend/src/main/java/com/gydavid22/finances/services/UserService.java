@@ -1,5 +1,6 @@
 package com.gydavid22.finances.services;
 
+import com.gydavid22.finances.dtos.UserChangePasswordDTO;
 import com.gydavid22.finances.dtos.UserLoginRegistrationDTO;
 import com.gydavid22.finances.entities.User;
 import com.gydavid22.finances.repositories.UserRepository;
@@ -35,7 +36,7 @@ public class UserService {
      * @return True, if the creation was successful, false if not (username taken)
      */
     public boolean createUser(UserLoginRegistrationDTO toCreate) {
-        if (checkUsernamePasswordConstraints(toCreate.getUsername(), toCreate.getPassword()) && !this.repo.findByUserName(toCreate.getUsername()).isEmpty()) {
+        if (!checkUsernamePasswordConstraints(toCreate.getUsername(), toCreate.getPassword()) || !this.repo.findByUserName(toCreate.getUsername()).isEmpty()) {
             return false;
         }
         char[] salt = generateSalt();
@@ -57,14 +58,48 @@ public class UserService {
             return null;
         }
         User user = result.get(0);
+        if (!user.getUserName().equals(toAuth.getUsername())) { // the DB is not case-sensitive
+            return null;
+        }
         return checkPassword(user, toAuth.getPassword()) ? user : null;
     }
 
+    /**
+     * Checks password validity and changes the password to a user
+     *
+     * @param newPass
+     * @param user
+     * @return True if succeeded, false otherwise
+     */
+    public boolean changePassword(UserChangePasswordDTO newPass, User user) {
+        if (!checkPasswordConstraints(newPass.getNewpassword()) || !checkPassword(user, newPass.getOldpassword())) {
+            return false;
+        }
+        char[] newSalt = generateSalt();
+        char[] newHashedPassword = hashPassword(newPass.getNewpassword(), newSalt);
+        user.setSalt(newSalt);
+        user.setHashedPassword(newHashedPassword);
+        repo.saveAndFlush(user);
+        return true;
+    }
+
+    /**
+     * Checks a password for a user
+     *
+     * @param user     User whose password should be compared
+     * @param password Password to compare
+     * @return True if the password matches, false otherwise
+     */
     private boolean checkPassword(User user, char[] password) {
         char[] hash = hashPassword(password, user.getSalt());
         return Arrays.equals(user.getHashedPassword(), hash);
     }
 
+    /**
+     * Deletes user and related data from the database
+     *
+     * @param user
+     */
     public void deleteUser(User user) {
         this.sessionService.deleteAllFromUser(user);
         this.repo.delete(user);

@@ -1,5 +1,6 @@
 package com.gydavid22.finances.controllers;
 
+import com.gydavid22.finances.dtos.UserChangePasswordDTO;
 import com.gydavid22.finances.dtos.UserLoginRegistrationDTO;
 import com.gydavid22.finances.entities.User;
 import com.gydavid22.finances.services.SessionService;
@@ -10,10 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -77,6 +75,21 @@ public class UserController {
         sessionService.invalidateSession(request, response);
         userService.deleteUser(user);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<?> changePassword(HttpServletRequest request, HttpServletResponse response, @RequestBody UserChangePasswordDTO newPass) {
+        if (!checkCookieValidity(request, response)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        User user = null;
+        for (Cookie i : request.getCookies()) {
+            if (i.getName().equals(SessionService.SESSION_COOKIE_NAME)) {
+                user = sessionService.getUserForSession(i);
+            }
+        }
+        boolean result = userService.changePassword(newPass, user);
+        return result ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     private boolean checkCookieValidity(HttpServletRequest request, HttpServletResponse response) {
