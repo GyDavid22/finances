@@ -28,6 +28,8 @@ public class SessionService {
         this.EMPTY_SESSION = new Cookie(SessionService.SESSION_COOKIE_NAME, "");
         this.EMPTY_SESSION.setMaxAge(0);
         this.EMPTY_SESSION.setHttpOnly(true);
+        this.EMPTY_SESSION.setAttribute("SameSite", "None");
+        this.EMPTY_SESSION.setSecure(true);
     }
 
     /**
@@ -50,6 +52,8 @@ public class SessionService {
         Cookie cookie = new Cookie(SessionService.SESSION_COOKIE_NAME, sessionId);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
+        cookie.setAttribute("SameSite", "None");
+        cookie.setSecure(true);
         // on a production version secure and domain would also be set
         return cookie;
     }
