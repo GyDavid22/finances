@@ -16,20 +16,22 @@ public class FinanceItem {
     private LocalDate date;
     @Nullable
     private String description;
-
+    @Enumerated(value = EnumType.ORDINAL)
+    private Type type;
     @ManyToOne
     private User user;
 
     public FinanceItem() {
     }
 
-    public FinanceItem(Long id, double amount, String name, LocalDate date, String description, User user) {
+    public FinanceItem(Long id, double amount, String name, LocalDate date, String description, User user, Type type) {
         this.id = id;
         this.amount = amount;
         this.name = name;
         this.date = date;
         this.description = description;
         this.user = user;
+        this.type = type;
     }
 
     public Long getId() {
@@ -72,11 +74,23 @@ public class FinanceItem {
         this.description = description;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public enum Type {
+        FOOD_DRINK, HOUSING_UTILITIES, CLOTHING_SHOES, TRAVEL_LEISURE, HEALTH_MEDICAL, EDUCATION_LEARNING, ENTERTAINMENT_HOBBY, SAVINGS_INVESTMENTS, OTHER
     }
 }

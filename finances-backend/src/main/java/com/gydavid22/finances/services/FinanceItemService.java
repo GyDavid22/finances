@@ -31,9 +31,13 @@ public class FinanceItemService {
         if (!checkValidity(dto)) {
             return null;
         }
-        FinanceItem newItem = new FinanceItem(null, dto.getAmount(), dto.getName(), dto.getDate(), dto.getDescription(), user);
-        repo.saveAndFlush(newItem);
-        return newItem;
+        try {
+            FinanceItem newItem = new FinanceItem(null, dto.getAmount(), dto.getName(), dto.getDate(), dto.getDescription(), user, FinanceItem.Type.valueOf(dto.getType().toUpperCase()));
+            repo.saveAndFlush(newItem);
+            return newItem;
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     public boolean update(FinanceItemDTO dto, FinanceItem toUpdate) {
@@ -44,7 +48,12 @@ public class FinanceItemService {
         toUpdate.setDate(dto.getDate());
         toUpdate.setDescription(dto.getDescription());
         toUpdate.setName(dto.getName());
-        repo.saveAndFlush(toUpdate);
+        try {
+            toUpdate.setType(FinanceItem.Type.valueOf(dto.getType().toUpperCase()));
+            repo.saveAndFlush(toUpdate);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
         return true;
     }
 
@@ -58,6 +67,6 @@ public class FinanceItemService {
     }
 
     private boolean checkValidity(FinanceItemDTO dto) {
-        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null);
+        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null);
     }
 }

@@ -13,8 +13,8 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -143,6 +143,7 @@ public class SessionService {
 
     /**
      * Removes all session entries older in days than stated in the parameter
+     *
      * @param days
      */
     public void removeOlderThan(int days) {
