@@ -2,7 +2,7 @@ package com.gydavid22.finances.entities;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "sessions_table", indexes = {@Index(columnList = "session_id")})

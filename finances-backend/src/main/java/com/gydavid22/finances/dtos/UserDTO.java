@@ -3,7 +3,7 @@ package com.gydavid22.finances.dtos;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.gydavid22.finances.entities.User;
 
-import java.sql.Date;
+import java.util.Date;
 
 @JsonSerialize
 public class UserDTO {

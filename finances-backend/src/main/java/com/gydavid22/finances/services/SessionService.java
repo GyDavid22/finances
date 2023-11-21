@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Base64;
 import java.util.List;
 
@@ -48,7 +50,7 @@ public class SessionService {
                 sessionId = generateSecureRandomCharSequence();
             }
         }
-        this.repo.saveAndFlush(new Session(null, sessionId.toCharArray(), user, Date.valueOf(LocalDate.now())));
+        this.repo.saveAndFlush(new Session(null, sessionId.toCharArray(), user, new Date()));
         Cookie cookie = new Cookie(SessionService.SESSION_COOKIE_NAME, sessionId);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
@@ -105,7 +107,7 @@ public class SessionService {
             return null;
         }
         Session resultSession = result.get(0);
-        resultSession.setLastInteraction(Date.valueOf(LocalDate.now()));
+        resultSession.setLastInteraction(new Date());
         repo.saveAndFlush(resultSession);
         return resultSession.getUser();
     }
@@ -137,5 +139,19 @@ public class SessionService {
      */
     public Cookie getEmptySessionCookie() {
         return this.EMPTY_SESSION;
+    }
+
+    /**
+     * Removes all session entries older in days than stated in the parameter
+     * @param days
+     */
+    public void removeOlderThan(int days) {
+        LocalDate now = LocalDate.now();
+        List<Session> results = this.repo.findAll().stream().filter(s -> {
+            LocalDate lastInteracion = s.getLastInteraction().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            return ChronoUnit.DAYS.between(lastInteracion, now) > days;
+        }).toList();
+        this.repo.deleteAll(results);
+        this.repo.flush();
     }
 }

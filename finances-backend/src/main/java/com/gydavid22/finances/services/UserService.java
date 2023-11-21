@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
@@ -45,7 +44,7 @@ public class UserService {
         char[] salt = generateSalt();
         this.repo
                 .saveAndFlush(new User(null, toCreate.getUsername(), salt, hashPassword(toCreate.getPassword(), salt),
-                        Date.valueOf(LocalDate.now()), null, null));
+                        new Date(), null, null));
         return true;
     }
 
