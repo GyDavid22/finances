@@ -1,11 +1,27 @@
 <nav class="navbar navbar-expand bg-body-tertiary fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand name-border" routerLink="/">Finances</a>
-        <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center">
-            <app-person-icon-svg class="login-icon d-flex"></app-person-icon-svg>
-            <div>
-                Not logged in
+        <a class="navbar-brand name-border"
+            [routerLink]="this.dataService.getIsLoggedIn() ? '/overview' : '/login'">Finances</a>
+        <div class="d-flex btn-group">
+            <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center"
+                [routerLink]="this.dataService.getIsLoggedIn() ? '/user' : ''">
+                <app-person-icon-svg class="login-icon d-flex"></app-person-icon-svg>
+                <div *ngIf="this.dataService.getIsLoggedIn()" class="icon-text">
+                    {{this.dataService.getUserName()}}
+                </div>
+                <div *ngIf="!this.dataService.getIsLoggedIn()" class="icon-text">
+                    Not logged in
+                </div>
+            </button>
+            <div *ngIf="this.dataService.getIsLoggedIn()" class="btn-group">
+                <button class="btn btn-outline-secondary d-flex justify-content-center align-items-center"
+                    (click)="logoutButtonHandler($event)">
+                    <app-logout-icon-svg class="logout-icon d-flex"></app-logout-icon-svg>
+                    <div class="d-none d-md-block icon-text">
+                        Logout
+                    </div>
+                </button>
             </div>
-        </button>
+        </div>
     </div>
 </nav>

@@ -1,7 +1,10 @@
-.login-icon {
+.login-icon, .logout-icon {
     width: 1.25rem;
     height: 1.25rem;
-    margin-right: 0.5rem;
+}
+
+.icon-text {
+    margin-left: 0.5rem;
 }
 
 .navbar-brand {

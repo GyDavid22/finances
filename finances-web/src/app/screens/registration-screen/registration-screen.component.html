@@ -10,19 +10,25 @@
             <div class="col-11 col-lg-4 col-md-6">
                 <form method="post">
                     <div class="form-group">
-                        <app-dismissable-error-message [message]="'Username already taken'"></app-dismissable-error-message>
+                        <app-dismissable-error-message
+                            [message]="'Username already taken or is shorter than 3 characters'"
+                            [show]="this.showUserNameTaken" (showChange)="this.showUserNameTaken=$event"
+                            [boxId]="'wrongusernamebox'"></app-dismissable-error-message>
                         <label for="username" class="form-label">Enter username</label>
                         <input class="form-control my-1" id="username" name="username" type="text"
-                            placeholder="Username" [(ngModel)]="username">
+                            placeholder="Username" [(ngModel)]="this.registrationData.username">
                         <small class="form-text text-muted">Your username must be unique</small>
                     </div>
                     <div class="form-group">
-                        <app-dismissable-error-message [message]="'Passwords don\'t match'"></app-dismissable-error-message>
+                        <app-dismissable-error-message
+                            [message]="'Passwords don\'t match or your password is shorter than 6 characters'"
+                            [show]="this.showPasswordsDontMatch" (showChange)="this.showPasswordsDontMatch=$event"
+                            [boxId]="'wrongpasswordbox'"></app-dismissable-error-message>
                         <label for="password" class="form-label">Enter password</label>
                         <input class="form-control my-1" id="password" name="password" type="password"
-                            placeholder="Password" [(ngModel)]="password">
+                            placeholder="Password" [(ngModel)]="this.registrationData.password">
                         <input class="form-control my-1" id="password-confirm" name="password-confirm" type="password"
-                            placeholder="Confirm password" [(ngModel)]="repassword">
+                            placeholder="Confirm password" [(ngModel)]="this.repassword">
                     </div>
                     <div class="d-flex align-items-center justify-content-center w-100">
                         <button class="btn btn-primary my-1" id="submit-button" type="submit"

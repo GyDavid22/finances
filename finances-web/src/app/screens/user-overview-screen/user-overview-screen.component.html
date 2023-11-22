@@ -4,24 +4,29 @@
             <div class="col-11 col-lg-6 col-md-8">
                 <div class="d-flex align-items-center justify-content-center w-100 flex-column">
                     <app-person-icon-svg class="person-big"></app-person-icon-svg>
-                    <h1>Welcome, [name]!</h1>
-                    <h3>Member since: [date]</h3>
+                    <h1>Welcome, {{user.username}}!</h1>
+                    <h3>Member since: {{dateAsString}}</h3>
                 </div>
             </div>
             <div class="col-11 col-lg-4 col-md-6">
                 <h4>Change password</h4>
                 <form method="post">
                     <div class="form-group">
-                        <app-dismissable-error-message [message]="'Wrong password'"></app-dismissable-error-message>
+                        <app-dismissable-error-message [message]="'Wrong password'" [show]="this.showWrongPasswordError"
+                            (showChange)="this.showWrongPasswordError=$event"
+                            [boxId]="'wrongpasswordbox'"></app-dismissable-error-message>
                         <label for="old-password" class="form-label">Enter old password</label>
                         <input class="form-control my-1" id="old-password" name="old-password" type="password"
-                            placeholder="Old password" [(ngModel)]="oldPassword">
+                            placeholder="Old password" [(ngModel)]="this.passwordChangeData.oldpassword">
                     </div>
                     <div class="form-group">
-                        <app-dismissable-error-message [message]="'Passwords don\'t match'"></app-dismissable-error-message>
+                        <app-dismissable-error-message
+                            [message]="'Passwords don\'t match or your password is shorter than 6 characters'"
+                            [show]="this.showWrongNewPasswordError" (showChange)="this.showWrongNewPasswordError=$event"
+                            [boxId]="'wrongnewpasswordbox'"></app-dismissable-error-message>
                         <label for="new-password" class="form-label">Enter new password</label>
                         <input class="form-control my-1" id="new-password" name="new-password" type="password"
-                            placeholder="New password" [(ngModel)]="newPassword">
+                            placeholder="New password" [(ngModel)]="this.passwordChangeData.newpassword">
                         <input class="form-control my-1" id="new-password-confirm" name="new-password-confirm"
                             type="password" placeholder="Confirm new password" [(ngModel)]="reNewPassword">
                     </div>
@@ -30,11 +35,16 @@
                             (click)="changePasswordButton($event)">Save password</button>
                     </div>
                 </form>
+                <app-dismissable-success-message [message]="'The password has been successfully changed'"
+                [show]="this.showPasswordChangeSuccess"
+                (showChange)="this.showPasswordChangeSuccess=$event"
+                [boxId]="'passwordchangesuccessbox'"></app-dismissable-success-message>
                 <div class="d-flex align-items-center justify-content-center w-100 mt-5">
-                    <button class="btn btn-danger" id="submit-button" type="submit"
-                        (click)="deleteButton($event)">Delete account</button>
+                    <button class="btn btn-danger" id="submit-button" type="submit" data-bs-toggle="modal"
+                        data-bs-target="#account_deletion_modal">Delete account</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<app-user-delete-confirm-modal></app-user-delete-confirm-modal>

@@ -1,0 +1,20 @@
+<div class="modal fade" id="account_deletion_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm account deletion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                You are about to delete your account. This will also delete all data related to your account. This
+                action is irreversible. Do you wish to proceed?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" (click)="this.confirmDeleteButtonHandler($event)"
+                    data-bs-dismiss="modal">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

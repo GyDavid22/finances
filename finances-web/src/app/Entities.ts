@@ -13,3 +13,19 @@ export class FinanceItem {
         this.description = description;
     }
 }
+
+export interface LoginRegistration {
+    username: string,
+    password: string
+}
+
+export interface User {
+    id: number,
+    username: string,
+    registrationDate: Date
+}
+
+export interface UserPasswordChange {
+    oldpassword: string,
+    newpassword: string
+}

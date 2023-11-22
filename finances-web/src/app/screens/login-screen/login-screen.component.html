@@ -6,13 +6,13 @@
                     <app-person-icon-svg class="person-big"></app-person-icon-svg>
                     <h1>Login</h1>
                 </div>
-                <app-dismissable-error-message
-                    [message]="'Username or password incorrect'"></app-dismissable-error-message>
+                <app-dismissable-error-message [message]="'Username or password incorrect'" [show]="this.show"
+                    (showChange)="this.show=$event"></app-dismissable-error-message>
                 <form method="post">
                     <input class="form-control my-1" id="username" name="username" type="text" placeholder="Username"
-                        [(ngModel)]="username">
+                        [(ngModel)]="loginData.username">
                     <input class="form-control my-1" id="password" name="password" type="password"
-                        placeholder="Password" [(ngModel)]="password">
+                        placeholder="Password" [(ngModel)]="loginData.password">
                     <div class="d-flex align-items-center justify-content-center w-100">
                         <button class="btn btn-primary my-1" id="submit-button" type="submit"
                             (click)="loginButton($event)">Login</button>

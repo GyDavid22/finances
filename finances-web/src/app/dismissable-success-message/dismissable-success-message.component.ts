@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-dismissable-error-message',
-  templateUrl: './dismissable-error-message.component.html',
-  styleUrls: ['./dismissable-error-message.component.css']
+  selector: 'app-dismissable-success-message',
+  templateUrl: './dismissable-success-message.component.html',
+  styleUrls: ['./dismissable-success-message.component.css']
 })
-export class DismissableErrorMessageComponent {
+export class DismissableSuccessMessageComponent {
   @Input() message: string = "";
   @Input() set show(val: boolean) {
     let box = document.getElementById(this.boxId);

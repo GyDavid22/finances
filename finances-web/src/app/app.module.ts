@@ -17,6 +17,12 @@ import { TrashIconSvgComponent } from './screens/finances-overview/card-item/tra
 import { CheckIconSvgComponent } from './screens/finances-overview/card-item/check-icon-svg/check-icon-svg.component';
 import { EditScreenComponent } from './screens/finances-overview/edit-screen/edit-screen.component';
 import { PlusIconSvgComponent } from './screens/finances-overview/plus-icon-svg/plus-icon-svg.component';
+import { DataService } from './data-service.service';
+import { LogoutIconSvgComponent } from './common-navbar/logout-icon-svg/logout-icon-svg.component';
+import { UserDeleteConfirmModalComponent } from './screens/user-overview-screen/user-delete-confirm-modal/user-delete-confirm-modal.component';
+import { WarningIconSvgComponent } from './dismissable-error-message/warning-icon-svg/warning-icon-svg.component';
+import { DismissableSuccessMessageComponent } from './dismissable-success-message/dismissable-success-message.component';
+import { SuccessIconSvgComponent } from './dismissable-success-message/success-icon-svg/success-icon-svg.component';
 
 @NgModule({
   declarations: [
@@ -33,14 +39,21 @@ import { PlusIconSvgComponent } from './screens/finances-overview/plus-icon-svg/
     TrashIconSvgComponent,
     CheckIconSvgComponent,
     EditScreenComponent,
-    PlusIconSvgComponent
+    PlusIconSvgComponent,
+    LogoutIconSvgComponent,
+    UserDeleteConfirmModalComponent,
+    WarningIconSvgComponent,
+    DismissableSuccessMessageComponent,
+    SuccessIconSvgComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
