@@ -67,6 +67,6 @@ public class FinanceItemService {
     }
 
     private boolean checkValidity(FinanceItemDTO dto) {
-        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null);
+        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null || dto.getAmount() <= 0);
     }
 }
