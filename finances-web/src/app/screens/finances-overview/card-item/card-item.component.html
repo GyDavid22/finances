@@ -14,6 +14,9 @@
                 <div>
                     {{item.description}}
                 </div>
+                <div class="text-muted fst-italic">
+                    {{readableType}}
+                </div>
             </div>
             <div class="col-2 col-lg-2 price-text d-flex align-items-center justify-content-center btn-group">
                 <button class="btn btn-outline-primary pencil-icon-button" (click)="editButtonHandler($event)">
@@ -27,6 +30,12 @@
         </div>
         <div class="d-none" id="edit-view-{{this.item.id}}">
             <div class="col-10">
+                <app-dismissable-error-message [message]="'Please add an amount larger than 0'"
+                [show]="this.showValidationErrorAmount" [boxId]="this.amountErrorBoxName"
+                (showChange)="this.showValidationErrorAmount=$event"></app-dismissable-error-message>
+            <app-dismissable-error-message [message]="'Name should be longer than 3 characters'"
+                [show]="this.showValidationErrorName" [boxId]="this.nameErrorBoxName"
+                (showChange)="this.showValidationErrorName=$event"></app-dismissable-error-message>
                 <form>
                     <div class="input-group py-1">
                         <input type="number" class="form-control amount-field" placeholder="Amount"
@@ -42,6 +51,11 @@
                         <textarea placeholder="Description (optional)" class="form-control"
                             [(ngModel)]="this.editCopyItem.description" name="description"></textarea>
                     </div>
+                    <div class="input-group py-1">
+                        <select class="form-select" [(ngModel)]="this.editCopyItem.type" name="type">
+                            <option *ngFor="let i of readableCategories" [value]="i.raw">{{i.readable}}</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div
@@ -49,8 +63,8 @@
                 <button class="btn btn-outline-success check-icon-button" (click)="saveButtonHandler($event)">
                     <app-check-icon-svg class="check-icon d-flex"></app-check-icon-svg>
                 </button>
-                <button class="btn btn-outline-danger check-icon-button" (click)="discardButtonHandler($event)">
-                    <app-check-icon-svg class="check-icon d-flex"></app-check-icon-svg>
+                <button class="btn btn-outline-danger x-icon-button" (click)="discardButtonHandler($event)">
+                    <app-x-icon-svg class="x-icon d-flex"></app-x-icon-svg>
                 </button>
             </div>
         </div>

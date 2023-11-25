@@ -23,6 +23,7 @@ import { UserDeleteConfirmModalComponent } from './screens/user-overview-screen/
 import { WarningIconSvgComponent } from './dismissable-error-message/warning-icon-svg/warning-icon-svg.component';
 import { DismissableSuccessMessageComponent } from './dismissable-success-message/dismissable-success-message.component';
 import { SuccessIconSvgComponent } from './dismissable-success-message/success-icon-svg/success-icon-svg.component';
+import { XIconSvgComponent } from './screens/finances-overview/card-item/x-icon-svg/x-icon-svg.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SuccessIconSvgComponent } from './dismissable-success-message/success-i
     UserDeleteConfirmModalComponent,
     WarningIconSvgComponent,
     DismissableSuccessMessageComponent,
-    SuccessIconSvgComponent
+    SuccessIconSvgComponent,
+    XIconSvgComponent
   ],
   imports: [
     BrowserModule,

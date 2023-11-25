@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FinanceItem } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
+import { FinanceItemConverters } from 'src/app/Entities';
 
 @Component({
   selector: 'app-card-item',
@@ -26,6 +27,9 @@ export class CardItemComponent implements AfterViewInit {
   }
   private _isInEditMode: boolean = false
   @Output() updateEmitter: EventEmitter<undefined> = new EventEmitter();
+  showValidationErrorAmount: boolean = false;
+  showValidationErrorName: boolean = false;
+  readableCategories = FinanceItemConverters.toReadable;
 
   constructor(private dataService: DataService) {
   }
@@ -51,8 +55,13 @@ export class CardItemComponent implements AfterViewInit {
 
   saveButtonHandler(e: Event) {
     e.preventDefault();
-    if (this.editCopyItem.description == "") {
-      this.editCopyItem.description = null;
+    if (this.editCopyItem.amount <= 0) {
+      this.showValidationErrorAmount = true;
+      return;
+    }
+    if (this.editCopyItem.name.length < 3) {
+      this.showValidationErrorName = true;
+      return;
     }
     this.editCopyItem.date = new Date(this.editCopyItem.date).toISOString().split("T")[0];
     this.dataService.buildAndSendRequest(`/items/${this.editCopyItem.id}`, "PUT", JSON.stringify(this.editCopyItem)).then((resp) => {
@@ -107,10 +116,29 @@ export class CardItemComponent implements AfterViewInit {
         edit.classList.remove("d-flex");
         edit.classList.add("d-none");
       }
+      this.showValidationErrorAmount = false;
+      this.showValidationErrorName = false;
     }
   }
 
   get deleteModalId(): string {
     return "#delete-confirm-{{this.item.id}}";
+  }
+
+  get readableType(): string {
+    for (let i of this.readableCategories) {
+      if (this.item.type == i.raw) {
+        return i.readable;
+      }
+    }
+    return "";
+  }
+
+  get nameErrorBoxName() {
+    return `edit-validation-error-box-name-${this.item.id}`
+  }
+
+  get amountErrorBoxName() {
+    return `edit-validation-error-box-amount-${this.item.id}`
   }
 }

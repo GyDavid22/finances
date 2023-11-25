@@ -3,12 +3,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="addItemModal">Add new item</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="dismissButtonHandler($event)"></button>
             </div>
             <div class="modal-body">
-                <app-dismissable-error-message [message]="'Please add an amount'"
-                    [show]="this.showValidationError" [boxId]="'add-validation-error-box'"
-                    (showChange)="this.showValidationError=$event"></app-dismissable-error-message>
+                <app-dismissable-error-message [message]="'Please add an amount larger than 0'"
+                    [show]="this.showValidationErrorAmount" [boxId]="'add-validation-error-box-amount'"
+                    (showChange)="this.showValidationErrorAmount=$event"></app-dismissable-error-message>
+                <app-dismissable-error-message [message]="'Name should be longer than 3 characters'"
+                    [show]="this.showValidationErrorName" [boxId]="'add-validation-error-box-name'"
+                    (showChange)="this.showValidationErrorName=$event"></app-dismissable-error-message>
                 <form>
                     <div class="input-group py-1">
                         <input type="number" class="form-control amount-field" placeholder="Amount"
@@ -24,11 +28,17 @@
                         <textarea placeholder="Description (optional)" class="form-control"
                             [(ngModel)]="this.itemToAdd.description" name="description"></textarea>
                     </div>
+                    <div class="input-group py-1">
+                        <select class="form-select" [(ngModel)]="this.itemToAdd.type" name="type">
+                            <option *ngFor="let i of readableCategories" [value]="i.raw">{{i.readable}}</option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="saveButtonHandler($event)">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="add-modal-dismiss-button"
+                    (click)="dismissButtonHandler($event)">Dismiss</button>
+                <button type="button" class="btn btn-success" (click)="saveButtonHandler($event)">Save</button>
             </div>
         </div>
     </div>

@@ -15,14 +15,16 @@
 
 .pencil-icon,
 .trash-icon,
-.check-icon {
+.check-icon,
+.x-icon {
     width: 1.3rem;
     height: 1.3rem;
 }
 
 .trash-icon-button,
 .pencil-icon-button,
-.check-icon-button {
+.check-icon-button,
+.x-icon-button {
     padding: 0.5rem;
 }
 
