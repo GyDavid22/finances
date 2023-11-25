@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FinanceItem } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
-import { FinanceItemConverters } from 'src/app/Entities';
+import { FinanceItemHelpers } from 'src/app/Entities';
 
 @Component({
   selector: 'app-card-item',
@@ -9,27 +9,13 @@ import { FinanceItemConverters } from 'src/app/Entities';
   styleUrls: ['./card-item.component.css']
 })
 export class CardItemComponent implements AfterViewInit {
-  @Input() item: FinanceItem = {
-    id: -1,
-    name: "",
-    amount: 0,
-    description: null,
-    date: "",
-    type: "CLOTHING_SHOES"
-  };
-  editCopyItem: FinanceItem = {
-    id: -1,
-    name: "",
-    amount: 0,
-    description: null,
-    date: "",
-    type: "CLOTHING_SHOES"
-  }
+  @Input() item: FinanceItem = FinanceItemHelpers.emptyFinanceItem;
+  editCopyItem: FinanceItem = FinanceItemHelpers.emptyFinanceItem;
   private _isInEditMode: boolean = false
   @Output() updateEmitter: EventEmitter<undefined> = new EventEmitter();
   showValidationErrorAmount: boolean = false;
   showValidationErrorName: boolean = false;
-  readableCategories = FinanceItemConverters.toReadable;
+  readableCategories = FinanceItemHelpers.toReadable;
 
   constructor(private dataService: DataService) {
   }

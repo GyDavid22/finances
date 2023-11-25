@@ -23,7 +23,7 @@ export interface UserPasswordChange {
     newpassword: string
 }
 
-export class FinanceItemConverters {
+export class FinanceItemHelpers {
     static toReadable: { raw: string; readable: string }[] = [
         { raw: "CLOTHING_SHOES", readable: "Clothing and shoes" },
         { raw: "EDUCATION_LEARNING", readable: "Education and learning" },
@@ -35,4 +35,26 @@ export class FinanceItemConverters {
         { raw: "TRAVEL_LEISURE", readable: "Travel and leisure" },
         { raw: "OTHER", readable: "Other" }
     ];
+
+    static get emptyFinanceItemViewModel() {
+        return {
+            id: -1,
+            amount: undefined,
+            name: "",
+            date: new Date().toISOString().split("T")[0],
+            description: null,
+            type: "CLOTHING_SHOES"
+          };
+    }
+
+    static get emptyFinanceItem(): FinanceItem {
+        return {
+            id: -1,
+            amount: 0,
+            name: "",
+            date: new Date().toISOString().split("T")[0],
+            description: null,
+            type: "CLOTHING_SHOES"
+          };
+    }
 }

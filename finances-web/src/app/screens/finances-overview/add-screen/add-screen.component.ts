@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FinanceItemConverters } from 'src/app/Entities';
+import { FinanceItemHelpers } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
 
 @Component({
@@ -8,19 +8,12 @@ import { DataService } from 'src/app/data-service.service';
   styleUrls: ['./add-screen.component.css']
 })
 export class AddScreenComponent {
-  itemToAdd = {
-    id: -1,
-    amount: undefined,
-    name: "",
-    date: new Date().toISOString().split("T")[0],
-    description: null,
-    type: "CLOTHING_SHOES"
-  };
+  itemToAdd = FinanceItemHelpers.emptyFinanceItemViewModel;
 
   showValidationErrorAmount: boolean = false;
   showValidationErrorName: boolean = false;
   @Output() updateRequestEmitter: EventEmitter<undefined> = new EventEmitter();
-  readableCategories = FinanceItemConverters.toReadable;
+  readableCategories = FinanceItemHelpers.toReadable;
 
   constructor(private dataService: DataService) {
   }
@@ -49,14 +42,7 @@ export class AddScreenComponent {
 
   dismissButtonHandler(e: Event) {
     e.preventDefault();
-    this.itemToAdd = {
-      id: -1,
-      amount: undefined,
-      name: "",
-      date: new Date().toISOString().split("T")[0],
-      description: null,
-      type: "CLOTHING_SHOES"
-    };
+    this.itemToAdd = FinanceItemHelpers.emptyFinanceItemViewModel;
     this.showValidationErrorAmount = false;
     this.showValidationErrorName = false;
   }
