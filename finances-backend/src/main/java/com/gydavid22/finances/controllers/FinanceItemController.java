@@ -5,6 +5,8 @@ import com.gydavid22.finances.entities.FinanceItem;
 import com.gydavid22.finances.entities.User;
 import com.gydavid22.finances.services.FinanceItemService;
 import com.gydavid22.finances.services.SessionService;
+import com.gydavid22.finances.services.FinanceItemService.IntervalType;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,11 +27,33 @@ public class FinanceItemController {
         this.financeItemService = financeItemService;
     }
 
+    /**
+     * Returns all finance items belonging to the session, supports filtering. If
+     * type or date is missing, returns everything in a descending order.
+     * 
+     * @param request
+     * @param response
+     * @param type
+     * @param date     Must follow ISO format. Examples: Year - 2023, Month -
+     *                 2023-11, Week - 2023-11-20 (start day of the week)
+     * @return
+     */
     @GetMapping("api/items")
-    public ResponseEntity<?> getAll(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> getAll(HttpServletRequest request, HttpServletResponse response,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String date) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if (type != null && date != null) {
+            try {
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(financeItemService.getForUserByInterval(user, IntervalType.valueOf(type.toUpperCase()),
+                                date));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
         }
         return ResponseEntity.status(HttpStatus.OK).body(financeItemService.getAllForUser(user));
     }
@@ -62,7 +86,8 @@ public class FinanceItemController {
     }
 
     @PostMapping("api/items")
-    public ResponseEntity<?> create(HttpServletRequest request, HttpServletResponse response, @RequestBody FinanceItemDTO dto) {
+    public ResponseEntity<?> create(HttpServletRequest request, HttpServletResponse response,
+            @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -75,7 +100,8 @@ public class FinanceItemController {
     }
 
     @PutMapping("api/items/{id}")
-    public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id, @RequestBody FinanceItemDTO dto) {
+    public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id,
+            @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

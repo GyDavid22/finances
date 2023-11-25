@@ -7,6 +7,8 @@ import com.gydavid22.finances.repositories.FinanceItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @Service
@@ -24,7 +26,28 @@ public class FinanceItemService {
     }
 
     public List<FinanceItemDTO> getAllForUser(User user) {
-        return repo.findByUserOrderByDateAsc(user).stream().map(FinanceItemDTO::convertToDto).toList();
+        return repo.findByUserOrderByDateDesc(user).stream().map(FinanceItemDTO::convertToDto).toList();
+    }
+
+    public List<FinanceItemDTO> getForUserByInterval(User user, IntervalType type, String date) {
+        LocalDate start, end;
+        start = end = LocalDate.now();
+        if (type == IntervalType.YEAR) {
+            start = LocalDate.of(Integer.parseInt(date), 1, 1);
+            end = LocalDate.of(Integer.parseInt(date), 12, 31);
+        } else if (type == IntervalType.MONTH) {
+            String[] splitted = date.split("-");
+            int year = Integer.parseInt(splitted[0]);
+            int month = Integer.parseInt(splitted[1]);
+            YearMonth ym = YearMonth.of(year, month);
+            start = LocalDate.of(year, month, 1);
+            end = LocalDate.of(year, month, ym.lengthOfMonth());
+        } else if (type == IntervalType.WEEK) {
+            start = LocalDate.parse(date);
+            end = start.plusDays(6);
+        }
+        return repo.findByUserAndDateBetweenOrderByDateDesc(user, start, end).stream().map(FinanceItemDTO::convertToDto)
+                .toList();
     }
 
     public FinanceItem create(User user, FinanceItemDTO dto) {
@@ -76,5 +99,9 @@ public class FinanceItemService {
     private boolean checkValidity(FinanceItemDTO dto) {
         return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null
                 || dto.getAmount() <= 0 || dto.getName().length() < 3);
+    }
+
+    public enum IntervalType {
+        WEEK, MONTH, YEAR
     }
 }
