@@ -32,7 +32,10 @@ public class FinanceItemService {
             return null;
         }
         try {
-            FinanceItem newItem = new FinanceItem(null, dto.getAmount(), dto.getName(), dto.getDate(), dto.getDescription(), user, FinanceItem.Type.valueOf(dto.getType().toUpperCase()));
+            String description = (dto.getDescription() != null && dto.getDescription().equals("")) ? null
+                    : dto.getDescription();
+            FinanceItem newItem = new FinanceItem(null, dto.getAmount(), dto.getName(), dto.getDate(),
+                    description, user, FinanceItem.Type.valueOf(dto.getType().toUpperCase()));
             repo.saveAndFlush(newItem);
             return newItem;
         } catch (IllegalArgumentException e) {
@@ -46,7 +49,11 @@ public class FinanceItemService {
         }
         toUpdate.setAmount(dto.getAmount());
         toUpdate.setDate(dto.getDate());
-        toUpdate.setDescription(dto.getDescription());
+        if (dto.getDescription() != null && dto.getDescription().equals("")) {
+            toUpdate.setDescription(null);
+        } else {
+            toUpdate.setDescription(dto.getDescription());
+        }
         toUpdate.setName(dto.getName());
         try {
             toUpdate.setType(FinanceItem.Type.valueOf(dto.getType().toUpperCase()));
@@ -67,6 +74,7 @@ public class FinanceItemService {
     }
 
     private boolean checkValidity(FinanceItemDTO dto) {
-        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null || dto.getAmount() <= 0 || dto.getName().length() < 5);
+        return !(dto.getAmount() == null || dto.getName() == null || dto.getDate() == null || dto.getType() == null
+                || dto.getAmount() <= 0 || dto.getName().length() < 3);
     }
 }
