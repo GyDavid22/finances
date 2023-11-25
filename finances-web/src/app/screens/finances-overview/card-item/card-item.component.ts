@@ -107,10 +107,6 @@ export class CardItemComponent implements AfterViewInit {
     }
   }
 
-  get deleteModalId(): string {
-    return "#delete-confirm-{{this.item.id}}";
-  }
-
   get readableType(): string {
     for (let i of this.readableCategories) {
       if (this.item.type == i.raw) {
