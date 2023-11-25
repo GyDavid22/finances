@@ -13,12 +13,16 @@
     padding-right: 0.5rem;
 }
 
-.pencil-icon, .trash-icon, .check-icon {
+.pencil-icon,
+.trash-icon,
+.check-icon {
     width: 1.3rem;
     height: 1.3rem;
 }
 
-.trash-icon-button, .pencil-icon-button, .check-icon-button {
+.trash-icon-button,
+.pencil-icon-button,
+.check-icon-button {
     padding: 0.5rem;
 }
 
@@ -26,6 +30,47 @@
     font-size: 0.85rem;
 }
 
-.btn-group > .btn {
+.btn-group>.btn,
+.btn-group-vertical>.btn {
     flex: 0;
+    width: auto;
+}
+
+.amount-field {
+    flex: 0 0 auto !important;
+    width: 25% !important;
+}
+
+@media (min-width: 768px) {
+
+    .btn-group-horizontal>.btn:not(:last-child):not(.dropdown-toggle),
+    .btn-group-horizontal>.btn.dropdown-toggle-split:first-child,
+    .btn-group-horizontal>.btn-group:not(:last-child)>.btn {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .btn-group-horizontal>.btn:nth-child(n+3),
+    .btn-group-horizontal> :not(.btn-check)+.btn,
+    .btn-group-horizontal>.btn-group:not(:first-child)>.btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+@media(max-width: 767px) {
+
+    .btn-group-vertical-own>.btn:not(:last-child):not(.dropdown-toggle),
+    .btn-group-vertical-own>.btn.dropdown-toggle-split:first-child,
+    .btn-group-vertical-own>.btn-group:not(:last-child)>.btn {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .btn-group-vertical-own>.btn:nth-child(n+3),
+    .btn-group-vertical-own> :not(.btn-check)+.btn,
+    .btn-group-vertical-own>.btn-group:not(:first-child)>.btn {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
 }

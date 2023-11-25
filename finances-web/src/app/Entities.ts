@@ -1,17 +1,10 @@
-export class FinanceItem {
-    id: number
-    price: number;
-    name: string;
-    date: string;
-    description: string | undefined;
-
-    constructor(id: number, price: number, name: string, date: string, description: string | undefined = undefined) {
-        this.id = id;
-        this.price = price;
-        this.name = name;
-        this.date = date;
-        this.description = description;
-    }
+export interface FinanceItem {
+    id: number,
+    amount: number,
+    name: string,
+    date: string,
+    description: string | null,
+    type: "FOOD_DRINK" | "HOUSING_UTILITIES" | "CLOTHING_SHOES" | "TRAVEL_LEISURE" | "HEALTH_MEDICAL" | "EDUCATION_LEARNING" | "ENTERTAINMENT_HOBBY" | "SAVINGS_INVESTMENTS" | "OTHER"
 }
 
 export interface LoginRegistration {

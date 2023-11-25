@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Data } from '@angular/router';
 import { FinanceItem } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
 
@@ -9,12 +8,21 @@ import { DataService } from 'src/app/data-service.service';
   styleUrls: ['./finances-overview-screen.component.css']
 })
 export class FinancesOverviewScreenComponent {
-  itemToEdit: FinanceItem | undefined;
+  financeItems: FinanceItem[] = [];
 
   constructor(public dataService: DataService) {
+    this.update();
   }
 
-  prepareItemToEdit(f: FinanceItem) {
-    this.itemToEdit = f;
+  update() {
+    this.dataService.buildAndSendRequest("/items", "GET").then((resp) => {
+      (async (json: Promise<FinanceItem[]>) => {
+        this.financeItems = await json;
+      })(resp.json());
+    });
+  }
+
+  set recieveUpdateRequest(val: undefined) {
+    this.update();
   }
 }

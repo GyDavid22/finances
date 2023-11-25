@@ -15,7 +15,7 @@ import { PersonIconSvgComponent } from './person-icon-svg/person-icon-svg.compon
 import { PencilIconSvgComponent } from './screens/finances-overview/card-item/pencil-icon-svg/pencil-icon-svg.component';
 import { TrashIconSvgComponent } from './screens/finances-overview/card-item/trash-icon-svg/trash-icon-svg.component';
 import { CheckIconSvgComponent } from './screens/finances-overview/card-item/check-icon-svg/check-icon-svg.component';
-import { EditScreenComponent } from './screens/finances-overview/edit-screen/edit-screen.component';
+import { AddScreenComponent } from './screens/finances-overview/add-screen/add-screen.component';
 import { PlusIconSvgComponent } from './screens/finances-overview/plus-icon-svg/plus-icon-svg.component';
 import { DataService } from './data-service.service';
 import { LogoutIconSvgComponent } from './common-navbar/logout-icon-svg/logout-icon-svg.component';
@@ -38,7 +38,7 @@ import { SuccessIconSvgComponent } from './dismissable-success-message/success-i
     PencilIconSvgComponent,
     TrashIconSvgComponent,
     CheckIconSvgComponent,
-    EditScreenComponent,
+    AddScreenComponent,
     PlusIconSvgComponent,
     LogoutIconSvgComponent,
     UserDeleteConfirmModalComponent,

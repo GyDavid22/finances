@@ -1,0 +1,35 @@
+<div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="addItemModal">Add new item</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <app-dismissable-error-message [message]="'Please add an amount'"
+                    [show]="this.showValidationError" [boxId]="'add-validation-error-box'"
+                    (showChange)="this.showValidationError=$event"></app-dismissable-error-message>
+                <form>
+                    <div class="input-group py-1">
+                        <input type="number" class="form-control amount-field" placeholder="Amount"
+                            [(ngModel)]="this.itemToAdd.amount" name="price">
+                        <span class="input-group-text col-1">€</span>
+                        <input type="text" class="form-control" placeholder="Name" [(ngModel)]="this.itemToAdd.name"
+                            name="name">
+                    </div>
+                    <div class="input-group py-1">
+                        <input type="date" class="form-control" [(ngModel)]="this.itemToAdd.date" name="date">
+                    </div>
+                    <div class="input-group py-1">
+                        <textarea placeholder="Description (optional)" class="form-control"
+                            [(ngModel)]="this.itemToAdd.description" name="description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Dismiss</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" (click)="saveButtonHandler($event)">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
