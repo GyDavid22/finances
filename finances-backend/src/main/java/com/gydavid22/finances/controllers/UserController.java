@@ -27,7 +27,7 @@ public class UserController {
         this.sessionService = sessionService;
     }
 
-    @PostMapping("/user")
+    @PostMapping("api/user")
     public ResponseEntity<String> createUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toCreate) {
         if (checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Log out first");
@@ -39,7 +39,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("/user/auth")
+    @PostMapping("api/user/auth")
     public ResponseEntity<?> authenticate(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toAuth) {
         if (checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -53,7 +53,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("api/user/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("api/user")
     public ResponseEntity<?> delete(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -78,7 +78,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("/user")
+    @PutMapping("api/user")
     public ResponseEntity<?> changePassword(HttpServletRequest request, HttpServletResponse response, @RequestBody UserChangePasswordDTO newPass) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -93,7 +93,7 @@ public class UserController {
         return result ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("/user")
+    @GetMapping("api/user")
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

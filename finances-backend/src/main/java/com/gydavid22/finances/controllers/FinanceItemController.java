@@ -25,7 +25,7 @@ public class FinanceItemController {
         this.financeItemService = financeItemService;
     }
 
-    @GetMapping(path = "/items")
+    @GetMapping("api/items")
     public ResponseEntity<?> getAll(HttpServletRequest request, HttpServletResponse response) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -34,7 +34,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.OK).body(financeItemService.getAllForUser(user));
     }
 
-    @GetMapping(path = "/items/{id}")
+    @GetMapping("api/items/{id}")
     public ResponseEntity<?> getOne(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -47,7 +47,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.OK).body(FinanceItemDTO.convertToDto(item));
     }
 
-    @DeleteMapping("/items/{id}")
+    @DeleteMapping("api/items/{id}")
     public ResponseEntity<?> delete(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -61,7 +61,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping("/items")
+    @PostMapping("api/items")
     public ResponseEntity<?> create(HttpServletRequest request, HttpServletResponse response, @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -74,7 +74,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(FinanceItemDTO.convertToDto(result));
     }
 
-    @PutMapping("/items/{id}")
+    @PutMapping("api/items/{id}")
     public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id, @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
