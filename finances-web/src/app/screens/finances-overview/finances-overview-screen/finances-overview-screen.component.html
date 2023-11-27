@@ -1,23 +1,44 @@
 <div class="d-flex flex-column align-items-center justify-content-center">
     <div class="row col-12 col-md-10 col-lg-9 col-xl-8">
-        <div class="d-flex justify-content-end">
-            <button class="btn btn-outline-primary plus-icon-button d-flex justify-content-center align-items-center"
-                data-bs-toggle="modal" data-bs-target="#addItemModal">
-                <app-plus-icon-svg class="plus-icon"></app-plus-icon-svg>
-                <div>
-                    Add new item
-                </div>
-            </button>
-        </div>
-        <div class="finance-items-container my-1">
-            <app-card-item *ngFor="let i of this.financeItems" [item]="i"
-                (updateEmitter)="this.recieveUpdateRequest=$event"></app-card-item>
-            <div *ngIf="this.financeItems.length == 0" class="d-flex align-items-center justify-content-center">
-                <div class="my-5 text-muted fst-italic">
-                    Nothing to show... yet.
-                </div>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex col-2 align-items-center justify-content-center">
+                <select class="form-select" [(ngModel)]="this.interval">
+                    <option value="ALL">All</option>
+                    <option value="YEAR">Year</option>
+                    <option value="MONTH">Month</option>
+                    <option value="WEEK">Week</option>
+                </select>
+            </div>
+            <div class="d-none align-items-center justify-content-center" id="pager-bar">
+                <button class="btn btn-outline-primary step-back-button" (click)="this.stepHandler($event, false)">
+                    <app-left-arrow-icon-svg class="left-icon"></app-left-arrow-icon-svg>
+                </button>
+                {{this.currentIntervalString}}
+                <button
+                    class="btn btn-outline-primary step-forward-button d-flex align-items-center justify-content-center"
+                    (click)="this.stepHandler($event, true)">
+                    <app-right-arrow-icon-svg class="right-icon"></app-right-arrow-icon-svg>
+                </button>
+            </div>
+            <div class="btn-group">
+                <button
+                    class="btn btn-outline-primary plus-icon-button d-flex justify-content-center align-items-center"
+                    data-bs-toggle="modal" data-bs-target="#addItemModal">
+                    <app-plus-icon-svg class="plus-icon"></app-plus-icon-svg>
+                    <div class="add-button-label d-none d-md-block">
+                        Add new item
+                    </div>
+                </button>
+                <button class="btn btn-outline-primary chart-icon-button" id="chart-button"
+                    (click)="statsModeButtonHandler($event)">
+                    <app-chart-icon-svg class="chart-icon"></app-chart-icon-svg>
+                </button>
             </div>
         </div>
+        <app-finance-item-list class="d-block" id="finance-item-list-box" [financeItems]="this.financeItems"
+            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
+        <app-finance-stats class="d-none" id="finance-stats-box" [financeItems]="this.financeItems"
+            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-stats>
     </div>
 </div>
 <app-add-screen (updateRequestEmitter)="this.recieveUpdateRequest=$event"></app-add-screen>

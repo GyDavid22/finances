@@ -16,7 +16,7 @@ import { PencilIconSvgComponent } from './screens/finances-overview/card-item/pe
 import { TrashIconSvgComponent } from './screens/finances-overview/card-item/trash-icon-svg/trash-icon-svg.component';
 import { CheckIconSvgComponent } from './screens/finances-overview/card-item/check-icon-svg/check-icon-svg.component';
 import { AddScreenComponent } from './screens/finances-overview/add-screen/add-screen.component';
-import { PlusIconSvgComponent } from './screens/finances-overview/plus-icon-svg/plus-icon-svg.component';
+import { PlusIconSvgComponent } from './screens/finances-overview/finances-overview-screen/plus-icon-svg/plus-icon-svg.component';
 import { DataService } from './data-service.service';
 import { LogoutIconSvgComponent } from './common-navbar/logout-icon-svg/logout-icon-svg.component';
 import { UserDeleteConfirmModalComponent } from './screens/user-overview-screen/user-delete-confirm-modal/user-delete-confirm-modal.component';
@@ -24,6 +24,11 @@ import { WarningIconSvgComponent } from './dismissable-error-message/warning-ico
 import { DismissableSuccessMessageComponent } from './dismissable-success-message/dismissable-success-message.component';
 import { SuccessIconSvgComponent } from './dismissable-success-message/success-icon-svg/success-icon-svg.component';
 import { XIconSvgComponent } from './screens/finances-overview/card-item/x-icon-svg/x-icon-svg.component';
+import { FinanceItemListComponent } from './screens/finances-overview/finance-item-list/finance-item-list.component';
+import { LeftArrowIconSvgComponent } from './screens/finances-overview/finances-overview-screen/left-arrow-icon-svg/left-arrow-icon-svg.component';
+import { RightArrowIconSvgComponent } from './screens/finances-overview/finances-overview-screen/right-arrow-icon-svg/right-arrow-icon-svg.component';
+import { ChartIconSvgComponent } from './screens/finances-overview/finances-overview-screen/chart-icon-svg/chart-icon-svg.component';
+import { FinanceStatsComponent } from './screens/finances-overview/finance-stats/finance-stats.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,12 @@ import { XIconSvgComponent } from './screens/finances-overview/card-item/x-icon-
     WarningIconSvgComponent,
     DismissableSuccessMessageComponent,
     SuccessIconSvgComponent,
-    XIconSvgComponent
+    XIconSvgComponent,
+    FinanceItemListComponent,
+    LeftArrowIconSvgComponent,
+    RightArrowIconSvgComponent,
+    ChartIconSvgComponent,
+    FinanceStatsComponent
   ],
   imports: [
     BrowserModule,

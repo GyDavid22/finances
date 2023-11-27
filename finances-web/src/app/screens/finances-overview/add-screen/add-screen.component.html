@@ -11,7 +11,7 @@
                 <app-dismissable-error-message [message]="'Please add an amount larger than 0'"
                     [show]="this.showValidationErrorAmount" [boxId]="'add-validation-error-box-amount'"
                     (showChange)="this.showValidationErrorAmount=$event"></app-dismissable-error-message>
-                <app-dismissable-error-message [message]="'Name should be longer than 3 characters'"
+                <app-dismissable-error-message [message]="'Name has to be longer than 3 characters'"
                     [show]="this.showValidationErrorName" [boxId]="'add-validation-error-box-name'"
                     (showChange)="this.showValidationErrorName=$event"></app-dismissable-error-message>
                 <form>

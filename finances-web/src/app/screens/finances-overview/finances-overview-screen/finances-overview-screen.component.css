@@ -1,15 +1,30 @@
-.finance-items-container {
-    max-height: calc(0.75 * 100vh);
-    overflow-y: auto;
-}
-
-.plus-icon {
+.plus-icon, .right-icon, .left-icon, .chart-icon {
     width: 1.3rem;
     height: 1.3rem;
-    margin-right: 0.25rem;
     display: flex;
 }
 
-.plus-icon-button {
+.add-button-label {
+    margin-left: 0.25rem;
+}
+
+.plus-icon-button, .chart-icon-button {
     padding: 0.5rem;
+}
+
+.chart-icon-button {
+    margin-right: 0.1rem;
+}
+
+.step-back-button {
+    margin-right: 0.2rem;
+}
+
+.step-forward-button {
+    margin-left: 0.2rem;
+}
+
+.finance-main-container {
+    max-height: calc(0.75 * 100vh);
+    overflow-y: auto;
 }
