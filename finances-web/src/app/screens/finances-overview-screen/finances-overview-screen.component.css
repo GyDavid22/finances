@@ -1,22 +1,20 @@
-.plus-icon, .right-icon, .left-icon, .chart-icon {
+.plus-icon,
+.right-icon,
+.left-icon,
+.chart-icon {
     width: 1.3rem;
     height: 1.3rem;
     display: flex;
-}
-
-.left-icon {
-    margin-right: 0.25rem;
-}
-
-.right-icon {
-    margin-right: 0.25rem;
 }
 
 .add-button-label {
     margin-left: 0.25rem;
 }
 
-.plus-icon-button, .chart-icon-button {
+.plus-icon-button,
+.chart-icon-button,
+.step-back-button,
+.step-forward-button {
     padding: 0.5rem;
 }
 
@@ -32,7 +30,8 @@
     margin-left: 0.5rem;
 }
 
-app-finance-item-list, app-finance-stats {
+app-finance-item-list,
+app-finance-stats {
     max-height: calc(0.75 * 100vh);
     overflow-y: auto;
     margin-top: 0.2rem;

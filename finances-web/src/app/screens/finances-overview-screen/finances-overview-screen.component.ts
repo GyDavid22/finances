@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FinanceItem } from 'src/app/Entities';
 import { DataService } from 'src/app/data-service.service';
 
@@ -7,13 +7,17 @@ import { DataService } from 'src/app/data-service.service';
   templateUrl: './finances-overview-screen.component.html',
   styleUrls: ['./finances-overview-screen.component.css']
 })
-export class FinancesOverviewScreenComponent {
+export class FinancesOverviewScreenComponent implements AfterViewInit {
   financeItems: FinanceItem[] = [];
-  private _interval: "ALL" | "YEAR" | "MONTH" | "WEEK" = "ALL";
+  private _interval: "ALL" | "YEAR" | "MONTH" | "WEEK" = "MONTH";
   cursor: Date = new Date();
   private isInStatsMode: boolean = false;
 
   constructor(public dataService: DataService) {
+  }
+
+  ngAfterViewInit(): void {
+    this.interval = "MONTH";
     this.update();
   }
 
