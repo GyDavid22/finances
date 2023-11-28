@@ -16,6 +16,7 @@ export class CardItemComponent implements AfterViewInit {
   showValidationErrorAmount: boolean = false;
   showValidationErrorName: boolean = false;
   readableCategories = FinanceItemHelpers.toReadable;
+  readableCatDict = FinanceItemHelpers.readableAsDict
 
   constructor(private dataService: DataService) {
   }
@@ -105,15 +106,6 @@ export class CardItemComponent implements AfterViewInit {
       this.showValidationErrorAmount = false;
       this.showValidationErrorName = false;
     }
-  }
-
-  get readableType(): string {
-    for (let i of this.readableCategories) {
-      if (this.item.type == i.raw) {
-        return i.readable;
-      }
-    }
-    return "";
   }
 
   get nameErrorBoxName() {

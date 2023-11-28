@@ -36,6 +36,14 @@ export class FinanceItemHelpers {
         { raw: "OTHER", readable: "Other" }
     ];
 
+    static readableAsDict: { [raw: string]: string } = {};
+
+    static initDict() {
+        for (let i of FinanceItemHelpers.toReadable) {
+            FinanceItemHelpers.readableAsDict[i.raw] = i.readable;
+        }
+    }
+
     static get emptyFinanceItemViewModel() {
         return {
             id: -1,
@@ -58,3 +66,5 @@ export class FinanceItemHelpers {
           };
     }
 }
+
+FinanceItemHelpers.initDict();
