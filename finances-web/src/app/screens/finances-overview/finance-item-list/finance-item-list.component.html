@@ -1,9 +1,7 @@
-<div class="finance-main-container my-1">
-    <app-card-item *ngFor="let i of this.financeItems" [item]="i"
-        (updateEmitter)="this.recieveUpdateRequest=$event"></app-card-item>
-    <div *ngIf="this.financeItems.length == 0" class="d-flex align-items-center justify-content-center">
-        <div class="my-5 text-muted fst-italic">
-            Nothing to show... yet.
-        </div>
+<app-card-item *ngFor="let i of this.financeItems" [item]="i"
+    (updateEmitter)="this.recieveUpdateRequest=$event"></app-card-item>
+<div *ngIf="this.financeItems.length == 0" class="d-flex align-items-center justify-content-center">
+    <div class="my-5 text-muted fst-italic">
+        Nothing to show... yet.
     </div>
 </div>
