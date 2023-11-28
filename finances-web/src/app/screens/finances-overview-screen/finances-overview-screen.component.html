@@ -23,24 +23,22 @@
                     <app-chart-icon-svg class="chart-icon"></app-chart-icon-svg>
                 </button>
             </div>
-            <div class="d-none align-items-center justify-content-center my-2" id="pager-bar">
-                <button
-                    class="btn btn-outline-primary step-back-button d-flex align-items-center justify-content-center"
-                    (click)="this.stepHandler($event, false)">
-                    <app-left-arrow-icon-svg class="left-icon"></app-left-arrow-icon-svg>
-                </button>
-                {{this.currentIntervalString}}
-                <button
-                    class="btn btn-outline-primary step-forward-button d-flex align-items-center justify-content-center"
-                    (click)="this.stepHandler($event, true)">
-                    <app-right-arrow-icon-svg class="right-icon"></app-right-arrow-icon-svg>
-                </button>
-            </div>
-            <app-finance-item-list class="d-block" id="finance-item-list-box" [financeItems]="this.financeItems"
-                (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
-            <app-finance-stats class="d-none" id="finance-stats-box" [financeItems]="this.financeItems"
-                (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-stats>
         </div>
+        <div class="d-none align-items-center justify-content-center my-2" id="pager-bar">
+            <button class="btn btn-outline-primary step-back-button d-flex align-items-center justify-content-center"
+                (click)="this.stepHandler($event, false)">
+                <app-left-arrow-icon-svg class="left-icon"></app-left-arrow-icon-svg>
+            </button>
+            {{this.currentIntervalString}}
+            <button class="btn btn-outline-primary step-forward-button d-flex align-items-center justify-content-center"
+                (click)="this.stepHandler($event, true)">
+                <app-right-arrow-icon-svg class="right-icon"></app-right-arrow-icon-svg>
+            </button>
+        </div>
+        <app-finance-item-list class="d-block" id="finance-item-list-box" [financeItems]="this.financeItems"
+            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
+        <app-finance-stats class="d-none" id="finance-stats-box" [financeItems]="this.financeItems"
+            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-stats>
     </div>
 </div>
 <app-add-screen (updateRequestEmitter)="this.recieveUpdateRequest=$event"></app-add-screen>
