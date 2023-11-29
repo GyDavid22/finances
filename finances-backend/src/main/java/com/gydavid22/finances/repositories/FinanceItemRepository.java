@@ -9,5 +9,10 @@ import java.util.List;
 
 public interface FinanceItemRepository extends JpaRepository<FinanceItem, Long> {
     public List<FinanceItem> findByUserOrderByDateDesc(User user);
+
     public List<FinanceItem> findByUserAndDateBetweenOrderByDateDesc(User user, LocalDate start, LocalDate end);
+
+    public List<FinanceItem> findByUserOrderByDateAsc(User user);
+
+    public List<FinanceItem> findByUserAndDateBetweenOrderByDateAsc(User user, LocalDate start, LocalDate end);
 }

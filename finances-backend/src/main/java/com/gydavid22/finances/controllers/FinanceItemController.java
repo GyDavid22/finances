@@ -6,6 +6,7 @@ import com.gydavid22.finances.entities.User;
 import com.gydavid22.finances.services.FinanceItemService;
 import com.gydavid22.finances.services.SessionService;
 import com.gydavid22.finances.services.FinanceItemService.IntervalType;
+import com.gydavid22.finances.services.FinanceItemService.SortType;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,21 +42,25 @@ public class FinanceItemController {
     @GetMapping("api/items")
     public ResponseEntity<?> getAll(HttpServletRequest request, HttpServletResponse response,
             @RequestParam(required = false) String type,
-            @RequestParam(required = false) String date) {
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String sort) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if (sort == null) {
+            sort = SortType.DESC.toString();
         }
         if (type != null && date != null) {
             try {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(financeItemService.getForUserByInterval(user, IntervalType.valueOf(type.toUpperCase()),
-                                date));
+                                date, SortType.valueOf(sort.toUpperCase())));
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
             }
         }
-        return ResponseEntity.status(HttpStatus.OK).body(financeItemService.getAllForUser(user));
+        return ResponseEntity.status(HttpStatus.OK).body(financeItemService.getAllForUser(user, SortType.valueOf(sort.toUpperCase())));
     }
 
     @GetMapping("api/items/{id}")

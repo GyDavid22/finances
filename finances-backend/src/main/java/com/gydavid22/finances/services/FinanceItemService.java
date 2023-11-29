@@ -25,11 +25,14 @@ public class FinanceItemService {
         repo.flush();
     }
 
-    public List<FinanceItemDTO> getAllForUser(User user) {
-        return repo.findByUserOrderByDateDesc(user).stream().map(FinanceItemDTO::convertToDto).toList();
+    public List<FinanceItemDTO> getAllForUser(User user, SortType type) {
+        if (type == SortType.DESC) {
+            return repo.findByUserOrderByDateDesc(user).stream().map(FinanceItemDTO::convertToDto).toList();
+        }
+        return repo.findByUserOrderByDateAsc(user).stream().map(FinanceItemDTO::convertToDto).toList();
     }
 
-    public List<FinanceItemDTO> getForUserByInterval(User user, IntervalType type, String date) {
+    public List<FinanceItemDTO> getForUserByInterval(User user, IntervalType type, String date, SortType stype) {
         LocalDate start, end;
         start = end = LocalDate.now();
         if (type == IntervalType.YEAR) {
@@ -46,7 +49,12 @@ public class FinanceItemService {
             start = LocalDate.parse(date);
             end = start.plusDays(6);
         }
-        return repo.findByUserAndDateBetweenOrderByDateDesc(user, start, end).stream().map(FinanceItemDTO::convertToDto)
+        if (stype == SortType.DESC) {
+            return repo.findByUserAndDateBetweenOrderByDateDesc(user, start, end).stream()
+                    .map(FinanceItemDTO::convertToDto)
+                    .toList();
+        }
+        return repo.findByUserAndDateBetweenOrderByDateAsc(user, start, end).stream().map(FinanceItemDTO::convertToDto)
                 .toList();
     }
 
@@ -103,5 +111,9 @@ public class FinanceItemService {
 
     public enum IntervalType {
         WEEK, MONTH, YEAR
+    }
+
+    public enum SortType {
+        ASC, DESC
     }
 }
