@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FinanceItem, FinanceItemHelpers } from 'src/app/Entities';
 import { Chart } from 'chart.js/auto';
 
@@ -14,7 +14,16 @@ export class FinanceStatsComponent {
     if (val.length > 0) {
       this.updateChart();      
     }
+    this.amountSums = this.countSum();
   }
+  @Input()
+  set prevInterval(val: FinanceItem[]) {
+    this._prevInterval = val;
+    this.amountSums = this.countSum();
+  }
+  private _prevInterval: FinanceItem[] = []
+  @Input()
+  interval: "ALL" | "YEAR" | "MONTH" | "WEEK" = "MONTH";
   @Output()
   forwardUpdateRequests: EventEmitter<undefined> = new EventEmitter();
   colorValues = [
@@ -30,7 +39,8 @@ export class FinanceStatsComponent {
   ];
   categories: string[] = [];
   pieChart: any;
-  private _finItems: FinanceItem[] = []
+  private _finItems: FinanceItem[] = [];
+  amountSums: { current: number, prev: number } = { current: 0, prev: 0};
 
   constructor() {
     for (let i of FinanceItemHelpers.toReadable) {
@@ -79,7 +89,25 @@ export class FinanceStatsComponent {
     return data;
   }
 
+  private countSum() {
+    let res = {
+      current: 0,
+      prev: 0
+    }
+    for (let i of this.financeItems) {
+      res.current += i.amount;
+    }
+    for (let i of this.prevInterval) {
+      res.prev += i.amount;
+    }
+    return res;
+  }
+
   get financeItems() {
     return this._finItems;
+  }
+
+  get prevInterval() {
+    return this._prevInterval;
   }
 }

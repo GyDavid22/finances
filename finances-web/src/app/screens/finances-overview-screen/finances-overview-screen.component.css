@@ -30,8 +30,8 @@
     margin-left: 0.5rem;
 }
 
-app-finance-item-list,
-app-finance-stats {
+app-finance-stats,
+.finance-item-list-box {
     max-height: calc(0.75 * 100vh);
     overflow-y: auto;
     margin-top: 0.2rem;

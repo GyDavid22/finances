@@ -35,9 +35,17 @@
                 <app-right-arrow-icon-svg class="right-icon"></app-right-arrow-icon-svg>
             </button>
         </div>
-        <app-finance-item-list class="d-block" id="finance-item-list-box" [financeItems]="this.financeItems"
-            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
+        <div class="d-block finance-item-list-box" id="finance-item-list-box">
+            <div class="d-flex w-100 align-items-center justify-content-end">
+                <button class="btn btn-outline-primary" (click)="this.switchSortHandler($event)">
+                    {{this.sort == "ASC" ? "Ascending" : "Descending"}}
+                </button>
+            </div>
+            <app-finance-item-list [financeItems]="this.financeItems"
+                (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
+        </div>
         <app-finance-stats class="d-none" id="finance-stats-box" [financeItems]="this.financeItems"
+            [prevInterval]="this.prevInterval" [interval]="this.interval"
             (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-stats>
     </div>
 </div>

@@ -9,9 +9,11 @@ import { DataService } from 'src/app/data-service.service';
 })
 export class FinancesOverviewScreenComponent implements AfterViewInit {
   financeItems: FinanceItem[] = [];
+  prevInterval: FinanceItem[] = [];
   private _interval: "ALL" | "YEAR" | "MONTH" | "WEEK" = "MONTH";
   cursor: Date = new Date();
   private isInStatsMode: boolean = false;
+  sort: "ASC" | "DESC" = "DESC";
 
   constructor(public dataService: DataService) {
   }
@@ -22,11 +24,18 @@ export class FinancesOverviewScreenComponent implements AfterViewInit {
   }
 
   update() {
-    this.dataService.buildAndSendRequest(`/items${this.queryBuilder()}`, "GET").then((resp) => {
+    this.dataService.buildAndSendRequest(`/items${this.queryBuilder(this.cursor)}`, "GET").then((resp) => {
       (async (json: Promise<FinanceItem[]>) => {
         this.financeItems = await json;
       })(resp.json());
     });
+    if (this.interval != "ALL") {
+      this.dataService.buildAndSendRequest(`/items${this.queryBuilder(this.stepDate(false))}`, "GET").then((resp) => {
+        (async (json: Promise<FinanceItem[]>) => {
+          this.prevInterval = await json;
+        })(resp.json());
+      }); 
+    }
   }
 
   set recieveUpdateRequest(val: undefined) {
@@ -71,35 +80,41 @@ export class FinancesOverviewScreenComponent implements AfterViewInit {
 
   stepHandler(e: Event, forward: boolean) {
     e.preventDefault();
+    this.cursor = this.stepDate(forward);
+    this.update();
+  }
+
+  stepDate(forward: boolean): Date {
     let multiplier: number;
     if (forward) {
       multiplier = 1;
     } else {
       multiplier = -1;
     }
+    let newDate = new Date(this.cursor);
     if (this.interval == "YEAR") {
-      this.cursor.setFullYear(this.cursor.getFullYear() + multiplier);
+      newDate.setFullYear(this.cursor.getFullYear() + multiplier);
     } else if (this.interval == "MONTH") {
-      this.cursor.setMonth(this.cursor.getMonth() + multiplier);
+      newDate.setMonth(this.cursor.getMonth() + multiplier);
     } else {
-      this.cursor.setDate(this.cursor.getDate() + multiplier * 7);
+      newDate.setDate(this.cursor.getDate() + multiplier * 7);
     }
-    this.update();
+    return newDate;
   }
 
-  private queryBuilder(): string {
+  private queryBuilder(dateToUse: Date): string {
     if (this.interval == "ALL") {
-      return "";
+      return `?sort=${this.sort}`;
     }
     let formattedDate: string = "";
     if (this.interval == "YEAR") {
-      formattedDate = this.cursor.getFullYear().toString();
+      formattedDate = dateToUse.getFullYear().toString();
     } else if (this.interval == "MONTH") {
-      formattedDate = `${this.cursor.getFullYear()}-${this.cursor.getMonth() + 1}`;
+      formattedDate = `${dateToUse.getFullYear()}-${dateToUse.getMonth() + 1}`;
     } else {
-      formattedDate = this.cursor.toISOString().split("T")[0];
+      formattedDate = dateToUse.toISOString().split("T")[0];
     }
-    return `?type=${this.interval}&date=${formattedDate}`;
+    return `?type=${this.interval}&date=${formattedDate}&sort=${this.sort}`;
   }
 
   statsModeButtonHandler(e: Event) {
@@ -135,5 +150,15 @@ export class FinancesOverviewScreenComponent implements AfterViewInit {
         chartButton.classList.add("btn-outline-primary");
       }
     }
+  }
+
+  switchSortHandler(e: Event) {
+    e.preventDefault();
+    if (this.sort == "ASC") {
+      this.sort = "DESC";
+    } else {
+      this.sort = "ASC";
+    }
+    this.update();
   }
 }

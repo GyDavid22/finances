@@ -3,15 +3,25 @@
         No items for this period
     </div>
 </div>
-<div *ngIf="this.financeItems.length > 0" class="d-flex flex-column flex-md-row">
-    <div class="col-12 col-md-6 card my-1 my-md-0 mx-0 mx-md-1">
+<div *ngIf="this.financeItems.length > 0" class="d-flex flex-column align-items-center justify-content-center">
+    <div *ngIf="this.interval != 'ALL'" class="m-2 card">
         <div class="card-body">
-            <canvas class="w-100 h-100" id="piechart"></canvas>
+            Money spent: {{this.amountSums.current}}<br>
+            Difference to last month: {{this.amountSums.current - this.amountSums.prev}}
         </div>
     </div>
-    <div class="col-12 col-md-6 card my-1 my-md-0 mx-0 mx-md-1">
-        <div class="card-body d-flex align-items-center justify-content-center">
-            graph2
+    <div class="d-flex flex-column flex-md-row col-12">
+        <div class="col-12 col-md-6 card my-1 my-md-0 mx-0 mx-md-1 h-100">
+            <div class="card-body">
+                <canvas id="piechart"></canvas>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 card my-1 my-md-0 mx-0 mx-md-1 h-100">
+            <div class="card-body">
+                <div>
+                    graph2
+                </div>
+            </div>
         </div>
     </div>
 </div>
