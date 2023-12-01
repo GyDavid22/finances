@@ -45,8 +45,7 @@
                 (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-item-list>
         </div>
         <app-finance-stats class="d-none" id="finance-stats-box" [financeItems]="this.financeItems"
-            [prevInterval]="this.prevInterval" [interval]="this.interval"
-            (forwardUpdateRequests)="this.recieveUpdateRequest=$event"></app-finance-stats>
+            [prevInterval]="this.prevInterval" [interval]="this.interval" [cursor]="this.cursor"></app-finance-stats>
     </div>
 </div>
 <app-add-screen (updateRequestEmitter)="this.recieveUpdateRequest=$event"></app-add-screen>

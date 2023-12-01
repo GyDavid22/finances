@@ -67,15 +67,26 @@ export class FinancesOverviewScreenComponent implements AfterViewInit {
   }
 
   get currentIntervalString(): string {
+    let start = new Date();
+    let end = new Date();
     if (this.interval == "YEAR") {
-      return this.cursor.getFullYear().toString();
+      start = new Date(this.cursor.getFullYear(), 0, 1);
+      end = new Date(this.cursor.getFullYear(), 11, 31);
     } else if (this.interval == "MONTH") {
-      return `${this.cursor.getFullYear()} - ${this.cursor.getMonth() + 1}`;
+      start = new Date(this.cursor.getFullYear(), this.cursor.getMonth(), 1);
+      end = new Date(this.cursor.getFullYear(), this.cursor.getMonth() + 1, 0);
     } else {
-      let endOfWeek = new Date(this.cursor.toISOString());
-      endOfWeek.setDate(endOfWeek.getDate() + 6);
-      return `${this.cursor.toLocaleDateString()} - ${endOfWeek.toLocaleDateString()}`
+      start = this.cursor; // in case of WEEK cursor stands at the beginning of the week
+      end = new Date(start);
+      end.setDate(end.getDate() + 6);
     }
+    return `${this.localDateInCurrentTimeZone(start)} - ${this.localDateInCurrentTimeZone(end)}`;
+  }
+
+  private localDateInCurrentTimeZone(date: Date): string {
+    let copy = new Date(date);
+    copy.setMinutes(copy.getMinutes() - copy.getTimezoneOffset());
+    return copy.toLocaleDateString();
   }
 
   stepHandler(e: Event, forward: boolean) {
