@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/items")
 public class FinanceItemController {
     @Autowired
     private final SessionService sessionService;
@@ -39,7 +40,7 @@ public class FinanceItemController {
      *                 2023-11, Week - 2023-11-20 (start day of the week)
      * @return
      */
-    @GetMapping("api/items")
+    @GetMapping
     public ResponseEntity<?> getAll(HttpServletRequest request, HttpServletResponse response,
             @RequestParam(required = false) String type,
             @RequestParam(required = false) String date,
@@ -63,7 +64,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.OK).body(financeItemService.getAllForUser(user, SortType.valueOf(sort.toUpperCase())));
     }
 
-    @GetMapping("api/items/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getOne(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -76,7 +77,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.OK).body(FinanceItemDTO.convertToDto(item));
     }
 
-    @DeleteMapping("api/items/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id) {
         User user = checkCookieValidity(request, response);
         if (user == null) {
@@ -90,7 +91,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping("api/items")
+    @PostMapping
     public ResponseEntity<?> create(HttpServletRequest request, HttpServletResponse response,
             @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);
@@ -104,7 +105,7 @@ public class FinanceItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(FinanceItemDTO.convertToDto(result));
     }
 
-    @PutMapping("api/items/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> update(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id,
             @RequestBody FinanceItemDTO dto) {
         User user = checkCookieValidity(request, response);

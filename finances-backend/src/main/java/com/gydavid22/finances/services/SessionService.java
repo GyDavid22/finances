@@ -20,19 +20,12 @@ import java.util.List;
 @Service
 public class SessionService {
     public final static String SESSION_COOKIE_NAME = "session";
-    private final Cookie EMPTY_SESSION;
 
     @Autowired
     private final SessionRepository repo;
 
     public SessionService(SessionRepository repo) {
         this.repo = repo;
-        this.EMPTY_SESSION = new Cookie(SessionService.SESSION_COOKIE_NAME, "");
-        this.EMPTY_SESSION.setMaxAge(0);
-        this.EMPTY_SESSION.setHttpOnly(true);
-        this.EMPTY_SESSION.setPath("/");
-        this.EMPTY_SESSION.setAttribute("SameSite", "None");
-        this.EMPTY_SESSION.setSecure(true);
     }
 
     /**
@@ -133,13 +126,6 @@ public class SessionService {
         byte[] values = new byte[64];
         sr.nextBytes(values);
         return Base64.getEncoder().encodeToString(values);
-    }
-
-    /**
-     * @return A cookie with an empty value for "session" and with a Max-Age of 0
-     */
-    public Cookie getEmptySessionCookie() {
-        return this.EMPTY_SESSION;
     }
 
     /**

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "finance_items_table", indexes = {@Index(columnList = "id"), @Index(columnList = "date")})
+@Table(name = "finance_items_table", indexes = {@Index(columnList = "id,date")})
 public class FinanceItem {
     @Id
     @GeneratedValue

@@ -8,7 +8,7 @@ public class FinancesApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(FinancesApplication.class, args);
-
+// uncomment to generate .sql file
 //        for (String i : args) {
 //            if (i.equalsIgnoreCase("--migration")) {
 //                EntityManagerFactory emf = Persistence.createEntityManagerFactory("");

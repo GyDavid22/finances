@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private final UserService userService;
@@ -27,7 +28,7 @@ public class UserController {
         this.sessionService = sessionService;
     }
 
-    @PostMapping("api/user")
+    @PostMapping
     public ResponseEntity<String> createUser(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toCreate) {
         if (checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Log out first");
@@ -39,7 +40,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @PostMapping("api/user/auth")
+    @PostMapping("/auth")
     public ResponseEntity<?> authenticate(HttpServletRequest request, HttpServletResponse response, @RequestBody UserLoginRegistrationDTO toAuth) {
         if (checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -53,7 +54,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("api/user/logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -62,7 +63,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @DeleteMapping("api/user")
+    @DeleteMapping
     public ResponseEntity<?> delete(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -78,7 +79,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PutMapping("api/user")
+    @PutMapping
     public ResponseEntity<?> changePassword(HttpServletRequest request, HttpServletResponse response, @RequestBody UserChangePasswordDTO newPass) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -93,7 +94,7 @@ public class UserController {
         return result ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("api/user")
+    @GetMapping
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         if (!checkCookieValidity(request, response)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
