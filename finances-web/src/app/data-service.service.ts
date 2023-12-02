@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FinanceItem, LoginRegistration, User } from './Entities';
-import { Data, Router } from '@angular/router';
+import { User } from './Entities';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'

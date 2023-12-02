@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FinanceItem, FinanceItemHelpers } from 'src/app/Entities';
 import { Chart } from 'chart.js/auto';
 
@@ -21,7 +21,6 @@ export class FinanceStatsComponent {
     this._prevInterval = val;
     this.amountSums = this.countSum();
   }
-  private _prevInterval: FinanceItem[] = []
   @Input()
   interval: "ALL" | "YEAR" | "MONTH" | "WEEK" = "MONTH";
   @Input()
@@ -37,16 +36,13 @@ export class FinanceStatsComponent {
     "rgb(192, 192, 192)",
     "rgb(176, 224, 230)"
   ];
-  private categories: string[] = [];
   private pieChart: any;
   private lineChart: any;
   private _finItems: FinanceItem[] = [];
+  private _prevInterval: FinanceItem[] = []
   amountSums: { current: number, prev: number } = { current: 0, prev: 0 };
 
   constructor() {
-    for (let i of FinanceItemHelpers.toReadable) {
-      this.categories.push(i.raw);
-    }
   }
 
   private updatePieChart() {

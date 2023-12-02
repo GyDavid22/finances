@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class CommonNavbarComponent {
   constructor(public dataService: DataService, private router: Router) {}
 
-  public async logoutButtonHandler(e: Event) {
+  async logoutButtonHandler(e: Event) {
     e.preventDefault();
     await this.dataService.buildAndSendRequest("/user/logout", "POST");
     this.dataService.setLogin(false);
