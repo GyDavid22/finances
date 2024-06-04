@@ -50,7 +50,7 @@ public class SessionService {
         cookie.setPath("/");
         cookie.setAttribute("SameSite", "None");
         cookie.setSecure(true);
-        // on a production version domain would also be set
+        cookie.setDomain("https://finances-evn4.onrender.com");
         return cookie;
     }
 
