@@ -50,7 +50,7 @@ public class SessionService {
         cookie.setPath("/");
         cookie.setAttribute("SameSite", "None");
         cookie.setSecure(true);
-        cookie.setDomain("https://finances-evn4.onrender.com");
+        cookie.setDomain("finances-backend-1ci4.onrender.com");
         return cookie;
     }
 
