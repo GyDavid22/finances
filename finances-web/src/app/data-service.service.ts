@@ -6,7 +6,7 @@ import { User } from './Entities';
   providedIn: 'root'
 })
 export class DataService {
-  private static readonly SERVICE_URL: string = "https://finances-evn4.onrender.com/api";
+  private static readonly SERVICE_URL: string = "https://finances-backend-1ci4.onrender.com/api";
 
   private isLoggedIn: boolean = false;
   private username: string = "";
