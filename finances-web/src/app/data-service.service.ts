@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { User } from './Entities';
 import { Router } from '@angular/router';
+import { User } from './Entities';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private static readonly SERVICE_URL: string = "http://localhost:8080/api";
+  private static readonly SERVICE_URL: string = "https://finances-evn4.onrender.com/api";
 
   private isLoggedIn: boolean = false;
   private username: string = "";
